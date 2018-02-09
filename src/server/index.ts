@@ -1,5 +1,6 @@
 import express from 'express'
 import throng from 'throng'
+import compressionMiddleware from 'compression'
 import webpack from 'webpack'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackConfig from '../../webpack.config'
@@ -18,6 +19,9 @@ function start() {
 		.enable('case sensitive routing')
 		.enable('strict routing')
 		.enable('trust proxy')
+
+	// Enable gzip compression
+	app.use(compressionMiddleware())
 
 	// Redirect direct index file request to root /
 	app.get('/' + INDEX_FILE, (_req, res) => {
