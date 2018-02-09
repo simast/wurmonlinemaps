@@ -1,5 +1,8 @@
 import express from 'express'
 import throng from 'throng'
+import webpack from 'webpack'
+import webpackDevMiddleware from 'webpack-dev-middleware'
+import webpackConfig from '../../webpack.config'
 
 import {STATIC_DIR, INDEX_FILE} from '../constants'
 
@@ -21,16 +24,35 @@ function start() {
 		res.redirect('/')
 	})
 
+	if (process.env.NODE_ENV !== 'production') {
+		setupForDevelopment(app)
+	}
+	else {
+		setupForProduction(app)
+	}
+
+	app.listen(PORT)
+}
+
+// Setup app for production environment
+function setupForProduction(app: express.Application) {
+
 	// Enable static client-side file serving on root /
 	app.use('/', express.static(STATIC_DIR, {
 		index: INDEX_FILE
 	}))
+}
 
-	app.get('/test', (req, res) => {
-		res.send('req.ips: ' + JSON.stringify(req.ips))
-	})
+// Setup app for development environment
+function setupForDevelopment(app: express.Application) {
 
-	app.listen(PORT)
+	app.use(webpackDevMiddleware(
+		webpack(webpackConfig),
+		{
+			publicPath: '',
+			index: INDEX_FILE
+		}
+	))
 }
 
 // Spawn required number of web server processes

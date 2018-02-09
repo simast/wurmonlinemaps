@@ -13,7 +13,7 @@ const config: webpack.Configuration = {
 	},
 	output: {
 		path: outputDir,
-		filename: '[name].js',
+		filename: '[name].js'
 	},
 	devtool: 'source-map',
 	resolve: {
@@ -30,8 +30,8 @@ const config: webpack.Configuration = {
 						outDir: outputDir,
 						target: 'es5',
 						sourceMap: true,
-						// NOTE: Transpiling all client code to native ES modules (and not default
-						// CommonJS) to take advantage of webpack's tree shaking support.
+						// NOTE: Transpiling all client code to native ES modules (and not default CommonJS)
+						// to take advantage of webpack's tree shaking and module scope hoisting support.
 						module: 'esnext'
 					}
 				}
@@ -41,6 +41,7 @@ const config: webpack.Configuration = {
 	plugins: getPlugins()
 }
 
+// Build a list of webpack plugins
 function getPlugins(): webpack.Plugin[] {
 
 	const plugins = []
@@ -68,7 +69,6 @@ function getPlugins(): webpack.Plugin[] {
 	plugins.push(new HtmlWebpackPlugin({
 		title: 'Wurm Online Maps',
 		filename: INDEX_FILE,
-		hash: true,
 		minify: {
 			collapseWhitespace: true
 		}
