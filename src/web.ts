@@ -23,7 +23,7 @@ function start() {
 	app.listen(PORT)
 }
 
-// Spawn required number of web processed
+// Spawn required number of web processes
 throng({
 	workers: WEB_CONCURRENCY,
 	lifetime: Infinity,
