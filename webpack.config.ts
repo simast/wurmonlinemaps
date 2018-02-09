@@ -4,7 +4,14 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 
 import {STATIC_DIR, INDEX_FILE} from './src/constants'
 
-const outputDir = path.resolve(__dirname, STATIC_DIR)
+// TypeScript compiler option overrides for client-side code
+const tsCompilerOptions = {
+	target: 'es5',
+	// NOTE: Transpiling all client code to native ES modules (and not default CommonJS)
+	// to take advantage of webpack's tree shaking and module scope hoisting support.
+	module: 'esnext',
+	sourceMap: true
+}
 
 // Webpack build configuration for client-side code distribution
 const config: webpack.Configuration = {
@@ -12,7 +19,7 @@ const config: webpack.Configuration = {
 		app: './src/client/index.tsx'
 	},
 	output: {
-		path: outputDir,
+		path: path.resolve(__dirname, STATIC_DIR),
 		filename: '[name].js'
 	},
 	devtool: 'source-map',
@@ -26,14 +33,7 @@ const config: webpack.Configuration = {
 				loader: 'ts-loader',
 				exclude: /node_modules/,
 				options: {
-					compilerOptions: {
-						outDir: outputDir,
-						target: 'es5',
-						sourceMap: true,
-						// NOTE: Transpiling all client code to native ES modules (and not default CommonJS)
-						// to take advantage of webpack's tree shaking and module scope hoisting support.
-						module: 'esnext'
-					}
+					compilerOptions: tsCompilerOptions
 				}
 			}
 		]
@@ -73,6 +73,15 @@ function getPlugins(): webpack.Plugin[] {
 			collapseWhitespace: true
 		}
 	}))
+
+	// Add chunk banner comments
+	plugins.push(new webpack.BannerPlugin(
+		[
+			'[name]',
+			process.env.HEROKU_RELEASE_VERSION,
+			process.env.HEROKU_RELEASE_CREATED_AT
+		].filter(item => Boolean(item)).join(' ')
+	))
 
 	return plugins
 }
