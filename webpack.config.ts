@@ -8,14 +8,14 @@ const outputDir = path.resolve(__dirname, STATIC_DIR)
 
 // Webpack build configuration for client-side code distribution
 const config: webpack.Configuration = {
-	entry: './src/client/index.ts',
+	entry: './src/client/index.tsx',
 	output: {
 		path: outputDir,
 		filename: 'bundle.js'
 	},
 	devtool: 'source-map',
 	resolve: {
-		extensions: ['.ts', '.tsx']
+		extensions: ['.ts', '.tsx', '.js']
 	},
 	module: {
 		rules: [
