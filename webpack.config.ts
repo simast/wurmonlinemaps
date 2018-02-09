@@ -1,7 +1,10 @@
 import webpack from 'webpack'
 import path from 'path'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
 
-const outputDir = path.resolve(__dirname, 'dist')
+import {STATIC_DIR, INDEX_FILE} from './src/constants'
+
+const outputDir = path.resolve(__dirname, STATIC_DIR)
 
 // Webpack build configuration for client-side code distribution
 const config: webpack.Configuration = {
@@ -34,7 +37,15 @@ const config: webpack.Configuration = {
 		]
 	},
 	plugins: [
-		new webpack.optimize.ModuleConcatenationPlugin()
+		new webpack.optimize.ModuleConcatenationPlugin(),
+		new HtmlWebpackPlugin({
+			title: 'Wurm Online Maps',
+			filename: INDEX_FILE,
+			hash: true,
+			minify: {
+				collapseWhitespace: true
+			}
+		})
 	]
 }
 
