@@ -77,7 +77,7 @@ function getPlugins(): webpack.Plugin[] {
 	// Add chunk banner comments
 	plugins.push(new webpack.BannerPlugin(
 		[
-			'[name]',
+			'[file]',
 			process.env.HEROKU_RELEASE_VERSION,
 			process.env.HEROKU_RELEASE_CREATED_AT
 		].filter(item => Boolean(item)).join(' ')
