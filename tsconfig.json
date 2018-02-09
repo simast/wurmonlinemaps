@@ -1,15 +1,23 @@
 {
 	"compilerOptions": {
+		// NOTE: "target" and "module" is for server-side code only (see webpack
+		// config for client-side compiler option overrides).
 		"target": "esnext",
 		"module": "commonjs",
 		"moduleResolution": "node",
 		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
 		"importHelpers": true,
 		"removeComments": true,
+		"jsx": "react",
 		"strict": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"noImplicitReturns": true,
-		"noFallthroughCasesInSwitch": true
-	}
+		"noFallthroughCasesInSwitch": true,
+		"forceConsistentCasingInFileNames": true
+	},
+	"exclude": [
+		"node_modules"
+	]
 }

@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 5000
 const WEB_CONCURRENCY = process.env.WEB_CONCURRENCY || 1
 const NODE_ENV = process.env.NODE_ENV || 'development'
 
-// Start web process
+// Start web server process
 function start() {
 
 	const app = express()
@@ -23,7 +23,7 @@ function start() {
 	app.listen(PORT)
 }
 
-// Spawn required number of web processes
+// Spawn required number of web server processes
 throng({
 	workers: WEB_CONCURRENCY,
 	lifetime: Infinity,
