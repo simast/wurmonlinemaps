@@ -48,6 +48,22 @@ function getPlugins(): webpack.Plugin[] {
 	// Enable module scope hoisting
 	plugins.push(new webpack.optimize.ModuleConcatenationPlugin())
 
+	// Split all dependencies from node_modules into separate vendors.js chunk
+	plugins.push(new webpack.optimize.CommonsChunkPlugin({
+		name: 'vendors',
+		minChunks: (module) => module.context && module.context.indexOf('node_modules') !== -1
+	}))
+
+	// Inline "process.env.NODE_ENV" checks for dead code elimination in production builds
+	plugins.push(new webpack.DefinePlugin({
+		'process.env': {
+			NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+		}
+	}))
+
+	// Minify with dead code elimination
+	plugins.push(new webpack.optimize.UglifyJsPlugin())
+
 	// Generate main HTML file
 	plugins.push(new HtmlWebpackPlugin({
 		title: 'Wurm Online Maps',
@@ -56,12 +72,6 @@ function getPlugins(): webpack.Plugin[] {
 		minify: {
 			collapseWhitespace: true
 		}
-	}))
-
-	// Split all dependencies from node_modules into separate vendors.js chunk
-	plugins.push(new webpack.optimize.CommonsChunkPlugin({
-		name: 'vendors',
-		minChunks: (module) => module.context && module.context.indexOf('node_modules') !== -1
 	}))
 
 	return plugins
