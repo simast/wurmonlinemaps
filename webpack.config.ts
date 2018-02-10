@@ -80,7 +80,7 @@ function getPlugins(): webpack.Plugin[] {
 			'[file]',
 			process.env.HEROKU_RELEASE_VERSION,
 			process.env.HEROKU_RELEASE_CREATED_AT
-		].filter(item => Boolean(item)).join(' ')
+		].filter(Boolean).join(' ')
 	))
 
 	return plugins
