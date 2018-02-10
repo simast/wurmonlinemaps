@@ -10,7 +10,7 @@
 		"no-irregular-whitespace": true,
 		"no-multi-spaces": true,
 		"array-bracket-spacing": [true, "never"],
-		"block-spacing": true,
+		"block-spacing": [true, "never"],
 		"object-curly-spacing": [true, "never"],
 		"ter-arrow-spacing": true,
 		"member-access": [
@@ -189,7 +189,7 @@
 		"no-unexpected-multiline": true,
 		"ter-func-call-spacing": [true, "never"],
 		"ter-indent": [true, "tab", {"SwitchCase": 1}],
-		"jsx-curly-spacing": [true, "always"],
+		"jsx-curly-spacing": [true, "never"],
 		"jsx-no-multiline-js": false,
 		"jsx-boolean-value": [true, "never"],
 		"jsx-no-lambda": false,

@@ -3,8 +3,8 @@ import throng from 'throng'
 import compressionMiddleware from 'compression'
 import webpack from 'webpack'
 import webpackDevMiddleware from 'webpack-dev-middleware'
-import webpackConfig from '../../webpack.config'
 
+import webpackConfig from '../../webpack.config'
 import {STATIC_DIR, INDEX_FILE} from '../constants'
 
 // Server-side environment constants
@@ -54,7 +54,8 @@ function setupForDevelopment(app: express.Application) {
 		webpack(webpackConfig),
 		{
 			publicPath: '',
-			index: INDEX_FILE
+			index: INDEX_FILE,
+			lazy: true
 		}
 	))
 }

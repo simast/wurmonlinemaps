@@ -1,6 +1,8 @@
 import webpack from 'webpack'
 import path from 'path'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
+import ExtractTextWebpackPlugin from 'extract-text-webpack-plugin'
+import OptimizeCssAssetsWebpackPlugin from 'optimize-css-assets-webpack-plugin'
 
 import {STATIC_DIR, INDEX_FILE} from './src/constants'
 
@@ -28,6 +30,7 @@ const config: webpack.Configuration = {
 	},
 	module: {
 		rules: [
+			// Load app TypeScript .ts and .tsx files
 			{
 				test: /\.tsx?$/,
 				loader: 'ts-loader',
@@ -35,6 +38,30 @@ const config: webpack.Configuration = {
 				options: {
 					compilerOptions: tsCompilerOptions
 				}
+			},
+			// Load .css files from third-party dependencies
+			{
+				test: /\.css$/,
+				include: /node_modules/,
+				use: ExtractTextWebpackPlugin.extract({
+					use: 'css-loader',
+					fallback: 'style-loader'
+				})
+			},
+			// Load app .css files
+			{
+				test: /\.css$/,
+				exclude: /node_modules/,
+				use: ExtractTextWebpackPlugin.extract({
+					fallback: 'style-loader',
+					use: {
+						loader: 'css-loader',
+						options: {
+							modules: true,
+							camelCase: 'only'
+						}
+					}
+				})
 			}
 		]
 	},
@@ -48,12 +75,6 @@ function getPlugins(): webpack.Plugin[] {
 
 	// Enable module scope hoisting
 	plugins.push(new webpack.optimize.ModuleConcatenationPlugin())
-
-	// Split all dependencies from node_modules into separate vendors.js chunk
-	plugins.push(new webpack.optimize.CommonsChunkPlugin({
-		name: 'vendors',
-		minChunks: (module) => module.context && module.context.indexOf('node_modules') !== -1
-	}))
 
 	// Inline "process.env.NODE_ENV" checks for dead code elimination in production builds
 	plugins.push(new webpack.DefinePlugin({
@@ -82,6 +103,18 @@ function getPlugins(): webpack.Plugin[] {
 			process.env.HEROKU_RELEASE_CREATED_AT
 		].filter(Boolean).join(' ')
 	))
+
+	// Extract all CSS styles to a separate style.css file
+	plugins.push(new ExtractTextWebpackPlugin('style.css'))
+
+	// Minify CSS files
+	plugins.push(new OptimizeCssAssetsWebpackPlugin({
+		cssProcessorOptions: {
+			discardComments: {
+				removeAll: true
+			}
+		}
+	}))
 
 	return plugins
 }
