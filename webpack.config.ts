@@ -44,7 +44,12 @@ const config: webpack.Configuration = {
 				test: /\.css$/,
 				include: /node_modules/,
 				use: ExtractTextWebpackPlugin.extract({
-					use: 'css-loader',
+					use: {
+						loader: 'css-loader',
+						options: {
+							url: false
+						}
+					},
 					fallback: 'style-loader'
 				})
 			},

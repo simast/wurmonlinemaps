@@ -1,17 +1,13 @@
 import React from 'react'
-import mapboxgl from 'mapbox-gl'
+import Leaflet from 'leaflet'
 
-import 'mapbox-gl/dist/mapbox-gl.css'
+import 'leaflet/dist/leaflet.css'
 import style from './Map.css'
-
-mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA'
 
 // Map component wrapping a Mapbox GL map
 export class Map extends React.PureComponent {
 
 	private mapElement: HTMLDivElement | null = null
-	// @ts-ignore
-	private map?: mapboxgl.Map
 
 	public render(): React.ReactNode {
 
@@ -25,10 +21,33 @@ export class Map extends React.PureComponent {
 
 	public componentDidMount() {
 
-		// Initialize Mapbox GL map
-		this.map = new mapboxgl.Map({
-			container: this.mapElement!,
-			style: 'mapbox://styles/mapbox/streets-v9'
+		const maxBounds = Leaflet.latLngBounds([[85, 180], [-85, -180]])
+
+		const map = Leaflet.map(this.mapElement!, {
+			attributionControl: false,
+			zoomControl: false,
+			minZoom: 2,
+			maxZoom: 8,
+			maxBounds,
+			maxBoundsViscosity: 0.5
 		})
+
+		map.on('contextmenu', () => undefined)
+
+		const tileLayer = Leaflet.tileLayer(
+			'http://wurmonlinemaps.com/Content/Tiles/xan-1708/terrain/{z}/{x}/{y}.png',
+			{
+				minNativeZoom: 1,
+				maxNativeZoom: 5,
+				updateInterval: 100,
+				noWrap: true,
+				className: style.tileLayer,
+				bounds: maxBounds
+			}
+		)
+
+		tileLayer.addTo(map)
+
+		map.fitWorld()
 	}
 }
