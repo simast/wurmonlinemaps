@@ -35,8 +35,9 @@ export class Map extends React.PureComponent {
 		map.on('contextmenu', () => undefined)
 
 		const tileLayer = Leaflet.tileLayer(
-			'http://wurmonlinemaps.com/Content/Tiles/xan-1708/terrain/{z}/{x}/{y}.png',
+			'https://s3-eu-west-1.amazonaws.com/wurmonlinemaps/xanadu-terrain-20171231/{z}/{x}/{y}.png',
 			{
+				tms: true,
 				minNativeZoom: 1,
 				maxNativeZoom: 5,
 				updateInterval: 100,
