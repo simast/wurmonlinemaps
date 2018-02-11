@@ -21,33 +21,39 @@ export class Map extends React.PureComponent {
 
 	public componentDidMount() {
 
-		const maxBounds = Leaflet.latLngBounds([[85, 180], [-85, -180]])
-
 		const map = Leaflet.map(this.mapElement!, {
+			crs: Leaflet.CRS.Simple,
 			attributionControl: false,
 			zoomControl: false,
 			minZoom: 2,
-			maxZoom: 8,
-			maxBounds,
+			maxZoom: 7, // Allow over-zooming
+			zoom: 2,
 			maxBoundsViscosity: 0.5
 		})
 
-		map.on('contextmenu', () => undefined)
+		const southWest = map.unproject([0, 8192], 5)
+		const northEast = map.unproject([8192, 0], 5)
+		const maxBounds = Leaflet.latLngBounds(southWest, northEast)
 
-		const tileLayer = Leaflet.tileLayer(
-			'https://s3-eu-west-1.amazonaws.com/wurmonlinemaps/xanadu-terrain-20171231/{z}/{x}/{y}.png',
+		map.setMaxBounds(maxBounds)
+
+		const baseTileLayer = Leaflet.tileLayer(
+			'https://static.wurmonlinemaps.info/xanadu-terrain-256-2017-12/{z}/{x}/{y}.png',
 			{
-				tms: true,
+				tileSize: 256,
 				minNativeZoom: 1,
 				maxNativeZoom: 5,
 				updateInterval: 100,
 				noWrap: true,
 				className: style.tileLayer,
-				bounds: maxBounds
+				bounds: maxBounds,
+				keepBuffer: 4
 			}
 		)
 
-		tileLayer.addTo(map)
+		baseTileLayer.addTo(map)
+
+		map.on('contextmenu', () => undefined)
 
 		map.fitWorld()
 	}
