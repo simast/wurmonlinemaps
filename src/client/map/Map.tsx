@@ -45,7 +45,7 @@ export class Map extends React.PureComponent {
 				maxNativeZoom: 5,
 				updateInterval: 100,
 				noWrap: true,
-				className: style.tileLayer,
+				className: style.baseTileLayer,
 				bounds: maxBounds,
 				keepBuffer: 4
 			}
