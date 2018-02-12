@@ -1,10 +1,12 @@
 import React from 'react'
 import Leaflet from 'leaflet'
 
+import {STATIC_BASE_URL} from '../../constants'
+
 import 'leaflet/dist/leaflet.css'
 import style from './Map.css'
 
-// Map component wrapping a Mapbox GL map
+// Map component wrapping a Leaflet map instance
 export class Map extends React.PureComponent {
 
 	private mapElement: HTMLDivElement | null = null
@@ -21,33 +23,41 @@ export class Map extends React.PureComponent {
 
 	public componentDidMount() {
 
+		const maxMapZoom = 5
+		const mapSize = 8192
+
 		const map = Leaflet.map(this.mapElement!, {
 			crs: Leaflet.CRS.Simple,
 			attributionControl: false,
 			zoomControl: false,
 			minZoom: 2,
-			maxZoom: 7, // Allow over-zooming
+			maxZoom: maxMapZoom + 2, // Allow over-zooming
 			zoom: 2,
 			maxBoundsViscosity: 0.5
 		})
 
-		const southWest = map.unproject([0, 8192], 5)
-		const northEast = map.unproject([8192, 0], 5)
+		const southWest = map.unproject([0, mapSize], maxMapZoom)
+		const northEast = map.unproject([mapSize, 0], maxMapZoom)
 		const maxBounds = Leaflet.latLngBounds(southWest, northEast)
 
 		map.setMaxBounds(maxBounds)
 
 		const baseTileLayer = Leaflet.tileLayer(
-			'https://static.wurmonlinemaps.info/xanadu-terrain-256-2017-12/{z}/{x}/{y}.png',
+			`${STATIC_BASE_URL}/xanadu-terrain-2017-12-31/{z}/{x}/{y}.{getExtension}`,
 			{
 				tileSize: 256,
-				minNativeZoom: 1,
-				maxNativeZoom: 5,
-				updateInterval: 100,
+				updateInterval: 50,
 				noWrap: true,
-				className: style.baseTileLayer,
 				bounds: maxBounds,
-				keepBuffer: 4
+				keepBuffer: 4,
+				minNativeZoom: 0,
+				maxNativeZoom: maxMapZoom,
+				className: style.baseTileLayer,
+				getExtension: ({z}: {z: number}) => (
+					(z < maxMapZoom)
+						? 'jpg' // Lower zoom levels use lossy JPG format
+						: 'png' // Higher zoom levels use lossless PNG format
+				)
 			}
 		)
 

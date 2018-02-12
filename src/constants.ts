@@ -1,7 +1,6 @@
 // Common constants
 
-// Static file serving directory
+export const BASE_URL = 'https://wurmonlinemaps.info'
+export const STATIC_BASE_URL = 'https://static.wurmonlinemaps.info'
 export const STATIC_DIR = 'dist'
-
-// Entry html file
 export const INDEX_FILE = 'index.html'
