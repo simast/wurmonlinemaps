@@ -64,7 +64,6 @@ export class Map extends React.PureComponent {
 		baseTileLayer.addTo(map)
 
 		map.on('contextmenu', () => undefined)
-
 		map.fitWorld()
 	}
 }

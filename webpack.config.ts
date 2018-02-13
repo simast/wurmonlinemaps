@@ -89,7 +89,9 @@ function getPlugins(): webpack.Plugin[] {
 	}))
 
 	// Minify with dead code elimination
-	plugins.push(new webpack.optimize.UglifyJsPlugin())
+	plugins.push(new webpack.optimize.UglifyJsPlugin({
+		sourceMap: true
+	}))
 
 	// Generate main HTML file
 	plugins.push(new HtmlWebpackPlugin({
