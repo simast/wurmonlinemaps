@@ -4,8 +4,8 @@ import compressionMiddleware from 'compression'
 import webpack from 'webpack'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 
-import webpackConfig from '../../webpack.config'
-import {STATIC_DIR, INDEX_FILE} from '../constants'
+import webpackConfig from '../webpack.config'
+import {STATIC_DIR, INDEX_FILE} from './constants'
 
 // Server-side environment constants
 const PORT = process.env.PORT || 5000

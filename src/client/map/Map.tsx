@@ -1,10 +1,16 @@
 import React from 'react'
 import Leaflet from 'leaflet'
 
-import {STATIC_BASE_URL} from '../../constants'
+import {STATIC_BASE_URL, TILE_SIZE} from '../../constants'
+import {Server, MapType, mapDataByServer} from '../../maps'
 
 import 'leaflet/dist/leaflet.css'
 import style from './Map.css'
+
+// Get max zoom level based on server map size
+const getMaxZoom = (size: number): number => (
+	Math.log(size / TILE_SIZE) / Math.log(2)
+)
 
 // Map component wrapping a Leaflet map instance
 export class Map extends React.PureComponent {
@@ -15,7 +21,7 @@ export class Map extends React.PureComponent {
 
 		return (
 			<div
-				className={style.base}
+				className={style.container}
 				ref={(element) => {this.mapElement = element}}
 			/>
 		)
@@ -23,29 +29,36 @@ export class Map extends React.PureComponent {
 
 	public componentDidMount() {
 
-		const maxMapZoom = 5
-		const mapSize = 8192
+		const server = Server.Xanadu
+		const mapType = MapType.Terrain
+		const version = '2017-12-31'
+		const {size} = mapDataByServer[server]
+
+		const mapSize = size
+		const maxMapZoom = getMaxZoom(size)
+		const minMapZoom = Math.min(2, maxMapZoom)
 
 		const map = Leaflet.map(this.mapElement!, {
 			crs: Leaflet.CRS.Simple,
 			attributionControl: false,
 			zoomControl: false,
-			minZoom: 2,
+			minZoom: minMapZoom,
 			maxZoom: maxMapZoom + 2, // Allow over-zooming
-			zoom: 2,
+			zoom: minMapZoom,
 			maxBoundsViscosity: 0.5
 		})
 
-		const southWest = map.unproject([0, mapSize], maxMapZoom)
-		const northEast = map.unproject([mapSize, 0], maxMapZoom)
-		const maxBounds = Leaflet.latLngBounds(southWest, northEast)
+		const maxBounds = Leaflet.latLngBounds(
+			map.unproject([0, mapSize], maxMapZoom),
+			map.unproject([mapSize, 0], maxMapZoom)
+		)
 
 		map.setMaxBounds(maxBounds)
 
 		const baseTileLayer = Leaflet.tileLayer(
-			`${STATIC_BASE_URL}/xanadu-terrain-2017-12-31/{z}/{x}/{y}.{getExtension}`,
+			`${STATIC_BASE_URL}/${server}-${mapType}-${version}/{z}/{x}/{y}.{getExtension}`,
 			{
-				tileSize: 256,
+				tileSize: TILE_SIZE,
 				updateInterval: 50,
 				noWrap: true,
 				bounds: maxBounds,

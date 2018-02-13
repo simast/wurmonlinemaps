@@ -2,7 +2,7 @@
 	"name": "wurmonlinemaps",
 	"version": "0.0.0",
 	"private": true,
-	"main": "src/server",
+	"main": "src",
 	"description": "Wurm Online maps application.",
 	"author": "Simas Toleikis <simast@gmail.com>",
 	"license": "MIT",
@@ -55,6 +55,6 @@
 		"husky": "0.14.3",
 		"tslint": "5.9.1",
 		"tslint-eslint-rules": "4.1.1",
-		"tslint-react": "3.5.0"
+		"tslint-react": "3.5.1"
 	}
 }
