@@ -35,7 +35,15 @@ function start() {
 		setupForProduction(app)
 	}
 
-	app.listen(PORT)
+	app.listen(PORT, (error?: Error) => {
+
+		if (error) {
+			throw error
+		}
+
+		// tslint:disable-next-line
+		console.info(`Server listening on http://localhost:${PORT}/`)
+	})
 }
 
 // Setup app for production environment
@@ -50,12 +58,15 @@ function setupForProduction(app: express.Application) {
 // Setup app for development environment
 function setupForDevelopment(app: express.Application) {
 
+	const publicPath = webpackConfig.output && webpackConfig.output.publicPath || ''
+
 	app.use(webpackDevMiddleware(
 		webpack(webpackConfig),
 		{
-			publicPath: '',
+			publicPath,
 			index: INDEX_FILE,
-			lazy: true
+			lazy: true,
+			stats: 'errors-only'
 		}
 	))
 }

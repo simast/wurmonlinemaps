@@ -21,6 +21,7 @@ const config: webpack.Configuration = {
 		app: './src/client/index.tsx'
 	},
 	output: {
+		publicPath: '/',
 		path: path.resolve(__dirname, STATIC_DIR),
 		filename: '[name].js'
 	},
