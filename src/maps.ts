@@ -15,14 +15,14 @@ export const enum Server {
 	Serenity = 'serenity'
 }
 
-export const enum MapType {
+export enum MapType {
 	Terrain = 'terrain',
 	Isometric = 'iso',
 	Topographic = 'topo',
 	Routes = 'routes'
 }
 
-interface IMapData {
+export interface IMapData {
 	name: string
 	size: number
 	versionsByType: {

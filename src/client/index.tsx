@@ -1,6 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+// Enable required core-js polyfills
+import 'core-js/fn/object/values'
+
 import {Application} from './app'
 
 import styles from './index.css'

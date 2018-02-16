@@ -40,16 +40,18 @@ const config: webpack.Configuration = {
 					compilerOptions: tsCompilerOptions
 				}
 			},
+			// Load all asset files as base64 data URLs
+			{
+				test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+				loader: 'url-loader'
+			},
 			// Load .css files from third-party dependencies
 			{
 				test: /\.css$/,
 				include: /node_modules/,
 				use: ExtractTextWebpackPlugin.extract({
 					use: {
-						loader: 'css-loader',
-						options: {
-							url: false
-						}
+						loader: 'css-loader'
 					},
 					fallback: 'style-loader'
 				})

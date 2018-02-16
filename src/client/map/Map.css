@@ -4,12 +4,34 @@
 	background-color: #363e6e;
 	background-size: 25px 25px;
 	background-image:
-		linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent),
-		linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent);
+		linear-gradient(
+			0deg,
+			transparent 24%,
+			rgba(255, 255, 255, .05) 25%,
+			rgba(255, 255, 255, .05) 26%,
+			transparent 27%,
+			transparent 74%,
+			rgba(255, 255, 255, .05) 75%,
+			rgba(255, 255, 255, .05) 76%,
+			transparent 77%,
+			transparent
+		),
+		linear-gradient(
+			90deg,
+			transparent 24%,
+			rgba(255, 255, 255, .05) 25%,
+			rgba(255, 255, 255, .05) 26%,
+			transparent 27%,
+			transparent 74%,
+			rgba(255, 255, 255, .05) 75%,
+			rgba(255, 255, 255, .05) 76%,
+			transparent 77%,
+			transparent
+		);
 }
 
-.baseTileLayer :global(.leaflet-tile) {
-	/* preserve crisp pixels with scaled up images */
+.tileLayer :global(.leaflet-tile) {
+	/* preserve crisp pixels with scaled up tile images */
 	image-rendering: optimizeSpeed; /* fallback */
 	image-rendering: -moz-crisp-edges; /* Firefox */
 	image-rendering: -o-crisp-edges; /* Opera */
