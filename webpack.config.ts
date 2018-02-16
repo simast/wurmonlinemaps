@@ -35,7 +35,6 @@ const config: webpack.Configuration = {
 			{
 				test: /\.tsx?$/,
 				loader: 'ts-loader',
-				exclude: /node_modules/,
 				options: {
 					compilerOptions: tsCompilerOptions
 				}
@@ -56,19 +55,23 @@ const config: webpack.Configuration = {
 					fallback: 'style-loader'
 				})
 			},
-			// Load app .css files
+			// Load app .less files
 			{
-				test: /\.css$/,
-				exclude: /node_modules/,
+				test: /\.less$/,
 				use: ExtractTextWebpackPlugin.extract({
 					fallback: 'style-loader',
-					use: {
-						loader: 'css-loader',
-						options: {
-							modules: true,
-							camelCase: 'only'
+					use: [
+						{
+							loader: 'css-loader',
+							options: {
+								modules: true,
+								camelCase: 'only'
+							}
+						},
+						{
+							loader: 'less-loader'
 						}
-					}
+					]
 				})
 			}
 		]

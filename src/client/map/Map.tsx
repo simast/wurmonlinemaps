@@ -6,7 +6,7 @@ import {Server, MapType, mapDataByServer, IMapData} from '../../maps'
 import {SelectLayersControl} from './controls'
 
 import 'leaflet/dist/leaflet.css'
-import style from './Map.css'
+import style from './Map.less'
 
 const mapTypeNames: {
 	[key in MapType]: string

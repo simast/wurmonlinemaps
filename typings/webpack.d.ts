@@ -1,4 +1,4 @@
-declare module '*.css' {
+declare module '*.less' {
 
 	interface IModuleLocals {
 		[key: string]: string | undefined

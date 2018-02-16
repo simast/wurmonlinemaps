@@ -1,7 +1,7 @@
 import React from 'react'
 import Leaflet from 'leaflet'
 
-import style from './SelectLayers.css'
+import style from './SelectLayers.less'
 
 interface IProps {
 	map: Leaflet.Map

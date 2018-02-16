@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom'
 import 'core-js/fn/object/values'
 
 import {Application} from './app'
-import styles from './index.css'
+import styles from './index.less'
 
 // Create main application container element
 const createAppContainer = () => {
