@@ -18,7 +18,7 @@ const tsCompilerOptions = {
 // Webpack build configuration for client-side code distribution
 const config: webpack.Configuration = {
 	entry: {
-		app: './src/client/index.tsx'
+		app: './src/client/index.ts'
 	},
 	output: {
 		publicPath: '/',

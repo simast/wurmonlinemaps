@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom'
 import 'core-js/fn/object/values'
 
 import {Application} from './app'
-
 import styles from './index.css'
 
 // Create main application container element
@@ -19,6 +18,6 @@ const createAppContainer = () => {
 
 // Render application
 ReactDOM.render(
-	<Application />,
+	React.createElement(Application),
 	createAppContainer()
 )

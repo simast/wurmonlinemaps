@@ -3,6 +3,7 @@ import Leaflet from 'leaflet'
 
 import {STATIC_BASE_URL, TILE_SIZE} from '../../constants'
 import {Server, MapType, mapDataByServer, IMapData} from '../../maps'
+import {SelectLayersControl} from './controls'
 
 import 'leaflet/dist/leaflet.css'
 import style from './Map.css'
@@ -89,6 +90,8 @@ export class Map extends React.PureComponent {
 
 		tileLayers[0].addTo(map)
 		layerControl.addTo(map)
+
+		map.addControl(new SelectLayersControl())
 
 		// Disable right click context menu
 		map.on('contextmenu', () => undefined)
