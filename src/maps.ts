@@ -64,6 +64,8 @@ export const mapDataByServer: {
 		size: 4096,
 		versionsByType: {
 			[MapType.Isometric]: [
+				'2012-01',
+				'2015-04-18',
 				'2016-11-01',
 				'2017-08-13',
 				'2017-12-31'
@@ -88,6 +90,7 @@ export const mapDataByServer: {
 		size: 2048,
 		versionsByType: {
 			[MapType.Isometric]: [
+				'2011-09-07',
 				'2016-11-01',
 				'2017-08-13',
 				'2017-12-31'
@@ -112,6 +115,7 @@ export const mapDataByServer: {
 		size: 2048,
 		versionsByType: {
 			[MapType.Isometric]: [
+				'2011-09-15',
 				'2016-11-01',
 				'2017-08-13',
 				'2017-12-31'
@@ -136,6 +140,7 @@ export const mapDataByServer: {
 		size: 2048,
 		versionsByType: {
 			[MapType.Isometric]: [
+				'2012-05-31',
 				'2016-11-01',
 				'2017-08-13',
 				'2017-12-31'
@@ -160,6 +165,7 @@ export const mapDataByServer: {
 		size: 2048,
 		versionsByType: {
 			[MapType.Isometric]: [
+				'2012-12-12',
 				'2016-11-01',
 				'2017-08-13',
 				'2017-12-31'
@@ -184,6 +190,7 @@ export const mapDataByServer: {
 		size: 2048,
 		versionsByType: {
 			[MapType.Isometric]: [
+				'2012-12-18',
 				'2016-11-01',
 				'2017-08-13',
 				'2017-12-31'
@@ -208,6 +215,7 @@ export const mapDataByServer: {
 		size: 8192,
 		versionsByType: {
 			[MapType.Isometric]: [
+				'2015-04-18',
 				'2016-11-01',
 				'2017-08-13',
 				'2017-12-31'
@@ -232,6 +240,8 @@ export const mapDataByServer: {
 		size: 4096,
 		versionsByType: {
 			[MapType.Isometric]: [
+				'2007-12-17',
+				'2012-01',
 				'2016-11-01',
 				'2017-08-13',
 				'2017-12-31'
@@ -253,6 +263,8 @@ export const mapDataByServer: {
 		size: 4096,
 		versionsByType: {
 			[MapType.Isometric]: [
+				'2011-11-01',
+				'2015-04-15',
 				'2016-11-01',
 				'2017-08-13',
 				'2017-12-31'
@@ -274,6 +286,7 @@ export const mapDataByServer: {
 		size: 2048,
 		versionsByType: {
 			[MapType.Isometric]: [
+				'2011-11-01',
 				'2016-11-01',
 				'2017-08-13',
 				'2017-12-31'
@@ -316,6 +329,7 @@ export const mapDataByServer: {
 		size: 2048,
 		versionsByType: {
 			[MapType.Isometric]: [
+				'2011-11-01',
 				'2016-11-01',
 				'2017-08-13',
 				'2017-12-31'
