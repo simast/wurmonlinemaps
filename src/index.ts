@@ -58,10 +58,11 @@ function setupForProduction(app: express.Application) {
 // Setup app for development environment
 function setupForDevelopment(app: express.Application) {
 
-	const publicPath = webpackConfig.output && webpackConfig.output.publicPath || ''
+	const config = webpackConfig()
+	const publicPath = config.output && config.output.publicPath || ''
 
 	app.use(webpackDevMiddleware(
-		webpack(webpackConfig),
+		webpack(config),
 		{
 			publicPath,
 			index: INDEX_FILE,
