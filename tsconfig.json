@@ -23,13 +23,12 @@
 		"noUnusedParameters": true,
 		"noImplicitReturns": true,
 		"noFallthroughCasesInSwitch": true,
-		"forceConsistentCasingInFileNames": true
+		"forceConsistentCasingInFileNames": true,
+		"experimentalDecorators": true
 	},
 	"include": [
-		"./src/**/*",
-		"./typings/**/*"
-	],
-	"exclude": [
-		"node_modules"
+		"src/**/*.ts",
+		"src/**/*.tsx",
+		"typings/**/*.d.ts"
 	]
 }

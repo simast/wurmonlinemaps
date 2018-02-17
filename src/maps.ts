@@ -1,9 +1,9 @@
 export const enum Cluster {
 	Freedom = 'freedom',
-	Epic = 'deliverance'
+	Epic = 'epic'
 }
 
-export const enum Server {
+export enum Server {
 	Affliction = 'affliction',
 	Celebration = 'celebration',
 	Chaos = 'chaos',

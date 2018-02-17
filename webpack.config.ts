@@ -4,22 +4,14 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 import ExtractTextWebpackPlugin from 'extract-text-webpack-plugin'
 import OptimizeCssAssetsWebpackPlugin from 'optimize-css-assets-webpack-plugin'
 
-import {STATIC_DIR, INDEX_FILE} from './src/constants'
-
-// TypeScript compiler option overrides for client-side code
-const tsCompilerOptions = {
-	target: 'es5',
-	// NOTE: Transpiling all client code to native ES modules (and not default CommonJS)
-	// to take advantage of webpack's tree shaking and module scope hoisting support.
-	module: 'esnext',
-	sourceMap: true
-}
+import {DIST_DIR, INDEX_FILE} from './src/constants'
 
 interface IEnvParams {
 	isProduction?: boolean
 }
 
 // Webpack build configuration for client-side code distribution
+// tslint:disable-next-line no-default-export
 export default ({
 	isProduction = false
 }: IEnvParams = {}): webpack.Configuration => ({
@@ -28,10 +20,10 @@ export default ({
 	},
 	output: {
 		publicPath: '/',
-		path: path.resolve(__dirname, STATIC_DIR),
+		path: path.resolve(__dirname, DIST_DIR),
 		filename: '[name].js'
 	},
-	devtool: isProduction ? false : 'source-map',
+	devtool: isProduction ? false : 'eval-source-map',
 	resolve: {
 		extensions: ['.ts', '.tsx', '.js']
 	},
@@ -42,7 +34,13 @@ export default ({
 				test: /\.tsx?$/,
 				loader: 'ts-loader',
 				options: {
-					compilerOptions: tsCompilerOptions
+					compilerOptions: {
+						target: 'es5',
+						// NOTE: Transpiling all client code to native ES modules (and not default CommonJS)
+						// to take advantage of webpack's tree shaking and module scope hoisting support.
+						module: 'esnext',
+						sourceMap: !isProduction
+					}
 				}
 			},
 			// Load all asset files as base64 data URLs

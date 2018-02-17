@@ -1,10 +1,12 @@
 import React from 'react'
-import {BrowserRouter} from 'react-router-dom'
+import {Router, Route} from 'react-router-dom'
 
+import {history} from './history'
 import {Map} from '../map'
+import {MAP_ROUTE} from '../../constants'
 
 export const Application: React.StatelessComponent = () => (
-	<BrowserRouter>
-		<Map />
-	</BrowserRouter>
+	<Router history={history}>
+		<Route path={MAP_ROUTE} component={Map} />
+	</Router>
 )

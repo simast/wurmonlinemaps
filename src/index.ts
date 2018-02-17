@@ -3,9 +3,10 @@ import throng from 'throng'
 import compressionMiddleware from 'compression'
 import webpack from 'webpack'
 import webpackDevMiddleware from 'webpack-dev-middleware'
+import historyFallbackMiddleware from 'connect-history-api-fallback'
 
 import webpackConfig from '../webpack.config'
-import {STATIC_DIR, INDEX_FILE} from './constants'
+import {DIST_DIR, INDEX_FILE, MAP_ROUTE} from './constants'
 
 // Server-side environment constants
 const PORT = process.env.PORT || 5000
@@ -27,6 +28,11 @@ function start() {
 	app.get('/' + INDEX_FILE, (_req, res) => {
 		res.redirect('/')
 	})
+
+	// Fallback to index file for client-side map routes
+	app.get(MAP_ROUTE, historyFallbackMiddleware({
+		index: `/${INDEX_FILE}`
+	}))
 
 	if (process.env.NODE_ENV !== 'production') {
 		setupForDevelopment(app)
@@ -50,7 +56,7 @@ function start() {
 function setupForProduction(app: express.Application) {
 
 	// Enable static client-side file serving on root /
-	app.use('/', express.static(STATIC_DIR, {
+	app.use('/', express.static(DIST_DIR, {
 		index: INDEX_FILE
 	}))
 }

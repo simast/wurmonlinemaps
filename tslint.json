@@ -195,6 +195,7 @@
 		"jsx-no-lambda": false,
 		"brace-style": [true, "stroustrup", {"allowSingleLine": true}],
 		"no-implicit-dependencies": [true, "dev"],
-		"interface-over-type-literal": true
+		"interface-over-type-literal": true,
+		"no-default-export": true
 	}
 }

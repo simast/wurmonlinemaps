@@ -1,9 +1,12 @@
 import React from 'react'
 import Leaflet from 'leaflet'
+import {observer} from 'mobx-react'
 
-import {STATIC_BASE_URL, TILE_SIZE} from '../../constants'
+import {STATIC_BASE_URL, MAP_TILE_SIZE} from '../../constants'
 import {Server, MapType, mapDataByServer, IMapData} from '../../maps'
+import {mapStore} from './store'
 import {SelectLayersControl} from './controls'
+import {SelectLayers} from './SelectLayers'
 
 import 'leaflet/dist/leaflet.css'
 import style from './Map.less'
@@ -18,14 +21,13 @@ const mapTypeNames: {
 }
 
 // Map component wrapping a Leaflet map instance
-export class Map extends React.PureComponent {
+@observer export class Map extends React.Component {
 
 	private mapElement: HTMLDivElement | null = null
-	private map?: Leaflet.Map
 
 	// Get max zoom level based on server map size
 	private static getMaxZoom(mapSize: number): number {
-		return Math.log(mapSize / TILE_SIZE) / Math.log(2)
+		return Math.log(mapSize / MAP_TILE_SIZE) / Math.log(2)
 	}
 
 	// Get a list of available map types based on map version
@@ -38,10 +40,9 @@ export class Map extends React.PureComponent {
 	public render(): React.ReactNode {
 
 		return (
-			<div
-				className={style.container}
-				ref={(element) => {this.mapElement = element}}
-			/>
+			<div className={style.container} ref={(el) => {this.mapElement = el}}>
+				<SelectLayers />
+			</div>
 		)
 	}
 
@@ -55,7 +56,7 @@ export class Map extends React.PureComponent {
 		const maxNativeZoom = Map.getMaxZoom(mapSize)
 		const minMapZoom = Math.min(2, maxNativeZoom)
 
-		const map = this.map = Leaflet.map(this.mapElement!, {
+		const map = Leaflet.map(this.mapElement!, {
 			crs: Leaflet.CRS.Simple,
 			attributionControl: false,
 			zoomControl: false,
@@ -91,7 +92,7 @@ export class Map extends React.PureComponent {
 		tileLayers[0].addTo(map)
 		layerControl.addTo(map)
 
-		map.addControl(new SelectLayersControl())
+		map.addControl(SelectLayersControl)
 
 		// Disable right click context menu
 		map.on('contextmenu', () => undefined)
@@ -99,6 +100,8 @@ export class Map extends React.PureComponent {
 		map.fitWorld({
 			animate: false
 		})
+
+		mapStore.setMap(map)
 	}
 
 	// Create a new Leaflet TileLayer
@@ -110,16 +113,10 @@ export class Map extends React.PureComponent {
 		maxNativeZoom: number
 	): Leaflet.TileLayer {
 
-		const {map} = this
-
-		if (!map) {
-			throw new Error('Leaflet map instance is not initialized!')
-		}
-
 		return Leaflet.tileLayer(
 			`${STATIC_BASE_URL}/${server}-${mapType}-${version}/{z}/{x}/{y}.{getExtension}`,
 			{
-				tileSize: TILE_SIZE,
+				tileSize: MAP_TILE_SIZE,
 				updateInterval: 50,
 				noWrap: true,
 				bounds,

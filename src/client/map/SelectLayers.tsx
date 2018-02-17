@@ -1,16 +1,29 @@
 import React from 'react'
-import Leaflet from 'leaflet'
+import ReactDOM from 'react-dom'
+import {observer} from 'mobx-react'
 
+import {mapStore} from './store'
+import {SelectLayersControl} from './controls'
 import style from './SelectLayers.less'
 
-interface IProps {
-	map: Leaflet.Map
-}
-
 // Component for selecting map layers
-export class SelectLayers extends React.PureComponent<IProps> {
+@observer export class SelectLayers extends React.Component {
 
 	public render(): React.ReactNode {
+
+		const container = SelectLayersControl.getContainer()
+
+		if (!mapStore.map || !container) {
+			return null
+		}
+
+		return ReactDOM.createPortal(
+			this.renderContent(),
+			container
+		)
+	}
+
+	private renderContent(): React.ReactNode {
 
 		return (
 			<div className={style.container}>TEST</div>
