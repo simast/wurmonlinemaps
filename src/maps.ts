@@ -1,53 +1,7 @@
-export const enum Cluster {
-	Freedom = 'freedom',
-	Epic = 'epic'
-}
+import {Server} from './server'
+import {MapType} from './map-type'
 
-export enum Server {
-	Affliction = 'affliction',
-	Celebration = 'celebration',
-	Chaos = 'chaos',
-	Deliverance = 'deliverance',
-	Desertion = 'desertion',
-	Elevation = 'elevation',
-	Exodus = 'exodus',
-	Independence = 'independence',
-	Pristine = 'pristine',
-	Release = 'release',
-	Serenity = 'serenity',
-	Xanadu = 'xanadu'
-}
-
-export enum MapType {
-	Terrain = 'terrain',
-	Isometric = 'iso',
-	Topographic = 'topo',
-	Routes = 'routes'
-}
-
-// Servers list grouped by cluster
-export const serversByCluster: {
-	[key in Cluster]: Server[]
-} = {
-	[Cluster.Freedom]: [
-		Server.Celebration,
-		Server.Chaos,
-		Server.Deliverance,
-		Server.Exodus,
-		Server.Independence,
-		Server.Pristine,
-		Server.Release,
-		Server.Xanadu
-	],
-	[Cluster.Epic]: [
-		Server.Affliction,
-		Server.Desertion,
-		Server.Elevation,
-		Server.Serenity
-	]
-}
-
-export interface IMapData {
+export interface IMap {
 	name: string
 	size: number
 	versionsByType: {
@@ -55,9 +9,9 @@ export interface IMapData {
 	}
 }
 
-// Map data
-export const mapDataByServer: {
-	[key in Server]: IMapData
+// All available maps
+export const mapsByServer: {
+	[key in Server]: IMap
 } = {
 	[Server.Independence]: {
 		name: 'Independence',

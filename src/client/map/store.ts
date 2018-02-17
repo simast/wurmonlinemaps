@@ -2,7 +2,8 @@ import {observable, action, autorun} from 'mobx'
 import Leaflet from 'leaflet'
 import {matchPath} from 'react-router'
 
-import {Server, MapType} from '../../maps'
+import {Server} from '../../server'
+import {MapType} from '../../map-type'
 import {MAP_ROUTE} from '../../constants'
 import {routingStore} from '../app'
 

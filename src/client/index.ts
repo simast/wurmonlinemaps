@@ -4,6 +4,7 @@ import {useStrict} from 'mobx'
 
 // Enable required core-js polyfills
 import 'core-js/fn/object/values'
+import 'core-js/fn/array/includes'
 
 import {Application} from './app'
 import styles from './index.less'

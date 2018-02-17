@@ -3,7 +3,9 @@ import Leaflet from 'leaflet'
 import {observer} from 'mobx-react'
 
 import {STATIC_BASE_URL, MAP_TILE_SIZE} from '../../constants'
-import {Server, MapType, mapDataByServer, IMapData} from '../../maps'
+import {Server} from '../../server'
+import {MapType, mapTypes} from '../../map-type'
+import {mapsByServer, IMap} from '../../maps'
 import {mapStore} from './store'
 import {SelectLayersControl} from './controls'
 import {SelectLayers} from './SelectLayers'
@@ -31,10 +33,8 @@ const mapTypeNames: {
 	}
 
 	// Get a list of available map types based on map version
-	private static getMapTypesForVersion(mapData: IMapData, version: string): MapType[] {
-
-		return (Object.values(MapType) as MapType[])
-			.filter((mapType) => (mapData.versionsByType[mapType] || []).indexOf(version) !== -1)
+	private static getMapTypesForVersion(mapData: IMap, version: string): MapType[] {
+		return mapTypes.filter((type) => (mapData.versionsByType[type] || []).includes(version))
 	}
 
 	public render(): React.ReactNode {
@@ -50,7 +50,7 @@ const mapTypeNames: {
 
 		const server = Server.Xanadu
 		const version = '2017-12-31'
-		const mapData = mapDataByServer[server]
+		const mapData = mapsByServer[server]
 
 		const mapSize = mapData.size
 		const maxNativeZoom = Map.getMaxZoom(mapSize)
@@ -73,15 +73,15 @@ const mapTypeNames: {
 
 		map.setMaxBounds(maxBounds)
 
-		const mapTypes = Map.getMapTypesForVersion(mapData, version)
+		const versionMapTypes = Map.getMapTypesForVersion(mapData, version)
 
 		// Create all available tile layers
-		const tileLayers = mapTypes.map((mapType) => (
+		const tileLayers = versionMapTypes.map((mapType) => (
 			this.createTileLayer(server, mapType, version, maxBounds, maxNativeZoom)
 		))
 
 		// Add layer control
-		const layerControl = Leaflet.control.layers(mapTypes.reduce(
+		const layerControl = Leaflet.control.layers(versionMapTypes.reduce(
 			(baseLayers, mapType, index) => ({
 				...baseLayers,
 				[mapTypeNames[mapType]]: tileLayers[index]
