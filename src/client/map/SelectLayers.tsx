@@ -1,32 +1,41 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import {observer} from 'mobx-react'
 
 import {mapStore} from './store'
-import {SelectLayersControl} from './controls'
+import {Control} from './Control'
+import {MapType} from '../../map-type'
+import {mapsByServer} from '../../maps'
 import style from './SelectLayers.less'
 
+const mapTypeNames: {
+	readonly [key in MapType]: string
+} = {
+	[MapType.Terrain]: 'Terrain',
+	[MapType.Isometric]: 'Isometric',
+	[MapType.Topographic]: 'Topographic',
+	[MapType.Routes]: 'Routes'
+}
+
 // Component for selecting map layers
-@observer export class SelectLayers extends React.Component {
+@observer export class SelectLayers extends Control {
 
-	public render(): React.ReactNode {
+	protected renderControl(): React.ReactNode {
 
-		const container = SelectLayersControl.getContainer()
-
-		if (!mapStore.map || !container) {
-			return null
-		}
-
-		return ReactDOM.createPortal(
-			this.renderContent(),
-			container
-		)
-	}
-
-	private renderContent(): React.ReactNode {
+		const {server, type} = mapStore
 
 		return (
-			<div className={style.container}>TEST</div>
+			<div className={style.container}>
+				{
+					server
+						? (
+							<>
+								<strong>{mapsByServer[server].name}</strong>
+								{type && <div>{mapTypeNames[type]}</div>}
+							</>
+						)
+						: 'Select server'
+				}
+			</div>
 		)
 	}
 }

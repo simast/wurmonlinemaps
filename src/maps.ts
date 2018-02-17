@@ -1,38 +1,39 @@
-import {Server} from './server'
-import {MapType} from './map-type'
+import {Server, servers} from './server'
+import {MapType, mapTypes} from './map-type'
+import {MAP_TILE_SIZE} from './constants'
 
-export interface IMap {
-	name: string
-	size: number
-	versionsByType: {
-		[type in MapType]?: string[]
+interface IMap {
+	readonly name: string
+	readonly size: number
+	readonly versionsByType: {
+		[type in MapType]?: ReadonlyArray<string>
 	}
 }
 
 // All available maps
 export const mapsByServer: {
-	[key in Server]: IMap
+	readonly [key in Server]: IMap
 } = {
 	[Server.Independence]: {
 		name: 'Independence',
 		size: 4096,
 		versionsByType: {
 			[MapType.Isometric]: [
-				'2012-01',
-				'2015-04-18',
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01',
+				'2015-04-18',
+				'2012-01'
 			],
 			[MapType.Terrain]: [
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01'
 			],
 			[MapType.Topographic]: [
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01'
 			],
 			[MapType.Routes]: [
 				'2017-12-31'
@@ -44,20 +45,20 @@ export const mapsByServer: {
 		size: 2048,
 		versionsByType: {
 			[MapType.Isometric]: [
-				'2011-09-07',
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01',
+				'2011-09-07'
 			],
 			[MapType.Terrain]: [
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01'
 			],
 			[MapType.Topographic]: [
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01'
 			],
 			[MapType.Routes]: [
 				'2017-12-31'
@@ -69,20 +70,20 @@ export const mapsByServer: {
 		size: 2048,
 		versionsByType: {
 			[MapType.Isometric]: [
-				'2011-09-15',
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01',
+				'2011-09-15'
 			],
 			[MapType.Terrain]: [
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01'
 			],
 			[MapType.Topographic]: [
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01'
 			],
 			[MapType.Routes]: [
 				'2017-12-31'
@@ -94,20 +95,20 @@ export const mapsByServer: {
 		size: 2048,
 		versionsByType: {
 			[MapType.Isometric]: [
-				'2012-05-31',
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01',
+				'2012-05-31'
 			],
 			[MapType.Terrain]: [
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01'
 			],
 			[MapType.Topographic]: [
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01'
 			],
 			[MapType.Routes]: [
 				'2017-12-31'
@@ -119,20 +120,20 @@ export const mapsByServer: {
 		size: 2048,
 		versionsByType: {
 			[MapType.Isometric]: [
-				'2012-12-12',
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01',
+				'2012-12-12'
 			],
 			[MapType.Terrain]: [
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01'
 			],
 			[MapType.Topographic]: [
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01'
 			],
 			[MapType.Routes]: [
 				'2017-12-31'
@@ -144,20 +145,20 @@ export const mapsByServer: {
 		size: 2048,
 		versionsByType: {
 			[MapType.Isometric]: [
-				'2012-12-18',
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01',
+				'2012-12-18'
 			],
 			[MapType.Terrain]: [
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01'
 			],
 			[MapType.Topographic]: [
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01'
 			],
 			[MapType.Routes]: [
 				'2017-12-31'
@@ -169,20 +170,20 @@ export const mapsByServer: {
 		size: 8192,
 		versionsByType: {
 			[MapType.Isometric]: [
-				'2015-04-18',
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01',
+				'2015-04-18'
 			],
 			[MapType.Terrain]: [
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01'
 			],
 			[MapType.Topographic]: [
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01'
 			],
 			[MapType.Routes]: [
 				'2017-12-31'
@@ -194,21 +195,21 @@ export const mapsByServer: {
 		size: 4096,
 		versionsByType: {
 			[MapType.Isometric]: [
-				'2007-12-17',
-				'2012-01',
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01',
+				'2012-01',
+				'2007-12-17'
 			],
 			[MapType.Terrain]: [
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01'
 			],
 			[MapType.Topographic]: [
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01'
 			]
 		}
 	},
@@ -217,21 +218,21 @@ export const mapsByServer: {
 		size: 4096,
 		versionsByType: {
 			[MapType.Isometric]: [
-				'2011-11-01',
-				'2015-04-15',
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01',
+				'2015-04-15',
+				'2011-11-01'
 			],
 			[MapType.Terrain]: [
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01'
 			],
 			[MapType.Topographic]: [
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01'
 			]
 		}
 	},
@@ -240,20 +241,20 @@ export const mapsByServer: {
 		size: 2048,
 		versionsByType: {
 			[MapType.Isometric]: [
-				'2011-11-01',
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01',
+				'2011-11-01'
 			],
 			[MapType.Terrain]: [
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01'
 			],
 			[MapType.Topographic]: [
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01'
 			]
 		}
 	},
@@ -262,19 +263,19 @@ export const mapsByServer: {
 		size: 2048,
 		versionsByType: {
 			[MapType.Isometric]: [
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01'
 			],
 			[MapType.Terrain]: [
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01'
 			],
 			[MapType.Topographic]: [
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01'
 			]
 		}
 	},
@@ -283,21 +284,51 @@ export const mapsByServer: {
 		size: 2048,
 		versionsByType: {
 			[MapType.Isometric]: [
-				'2011-11-01',
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01',
+				'2011-11-01'
 			],
 			[MapType.Terrain]: [
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01'
 			],
 			[MapType.Topographic]: [
-				'2016-11-01',
+				'2017-12-31',
 				'2017-08-13',
-				'2017-12-31'
+				'2016-11-01'
 			]
 		}
 	}
 }
+
+// Available map types by server
+export const mapTypesByServer: {
+	readonly [key in Server]: ReadonlyArray<MapType>
+} = servers.reduce(
+	(result, server) => Object.assign(result, {
+		[server]: mapTypes.filter(
+			(type) => (mapsByServer[server].versionsByType[type] || []).length > 0
+		)
+	}),
+	{
+		[Server.Independence]: [],
+		[Server.Deliverance]: [],
+		[Server.Exodus]: [],
+		[Server.Celebration]: [],
+		[Server.Pristine]: [],
+		[Server.Release]: [],
+		[Server.Xanadu]: [],
+		[Server.Chaos]: [],
+		[Server.Elevation]: [],
+		[Server.Desertion]: [],
+		[Server.Affliction]: [],
+		[Server.Serenity]: []
+	}
+)
+
+// Utility function used to get max zoom level based on server map size
+export const getMaxMapZoom = (mapSize: number): number => (
+	Math.log(mapSize / MAP_TILE_SIZE) / Math.log(2)
+)

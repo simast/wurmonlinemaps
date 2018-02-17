@@ -16,11 +16,11 @@ export enum Server {
 }
 
 // Servers list
-export const servers: Server[] = Object.values(Server)
+export const servers: ReadonlyArray<Server> = Object.values(Server)
 
 // Servers list grouped by cluster
 export const serversByCluster: {
-	[key in Cluster]: Server[]
+	readonly [key in Cluster]: ReadonlyArray<Server>
 } = {
 	[Cluster.Freedom]: [
 		Server.Celebration,

@@ -5,4 +5,4 @@ export enum MapType {
 	Routes = 'routes'
 }
 
-export const mapTypes: MapType[] = Object.values(MapType)
+export const mapTypes: ReadonlyArray<MapType> = Object.values(MapType)
