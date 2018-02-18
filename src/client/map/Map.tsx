@@ -5,6 +5,7 @@ import {autorun} from 'mobx'
 import {STATIC_BASE_URL, MAP_TILE_SIZE} from '../../constants'
 import {mapsByServer, getMaxMapZoom} from '../../maps'
 import {mapStore} from './store'
+import {Control} from './Control'
 import {SelectLayers} from './SelectLayers'
 
 import 'leaflet/dist/leaflet.css'
@@ -25,7 +26,9 @@ export class Map extends React.Component {
 
 		return (
 			<div className={style.container} ref={(el) => {this.mapElement = el}}>
-				<SelectLayers map={this.map} position="topright" />
+				<Control map={this.map} position="topright">
+					<SelectLayers />
+				</Control>
 			</div>
 		)
 	}
@@ -35,7 +38,7 @@ export class Map extends React.Component {
 		this.createMap()
 		this.forceUpdate()
 
-		autorun(this.updateTileLayer.bind(this))
+		autorun(this.updateTileLayer)
 	}
 
 	// Create Leaflet map instance
@@ -45,7 +48,8 @@ export class Map extends React.Component {
 			crs: Leaflet.CRS.Simple,
 			attributionControl: false,
 			zoomControl: false,
-			maxBoundsViscosity: 0.5
+			maxBoundsViscosity: 0.5,
+			preferCanvas: true
 		})
 
 		// Disable right click context menu
@@ -53,7 +57,7 @@ export class Map extends React.Component {
 	}
 
 	// Update map tile layer based on map store state changes
-	private updateTileLayer(): void {
+	private updateTileLayer = (): void => {
 
 		const {map} = this
 
@@ -75,7 +79,7 @@ export class Map extends React.Component {
 
 		const {size} = mapsByServer[server]
 		const maxNativeZoom = getMaxMapZoom(size)
-		const minMapZoom = Math.min(2, maxNativeZoom)
+		const minMapZoom = Math.min(1, maxNativeZoom)
 
 		const bounds = Leaflet.latLngBounds(
 			map.unproject([0, size], maxNativeZoom),
@@ -94,7 +98,7 @@ export class Map extends React.Component {
 				minNativeZoom: 0,
 				maxNativeZoom,
 				className: style.tileLayer,
-				getExtension: ({z}: {z: number}) => (
+				getExtension: ({z}: {z: number}): string => (
 					(z < maxNativeZoom)
 						? 'jpg' // Lower zoom levels use lossy JPG format
 						: 'png' // Higher zoom levels use lossless PNG format

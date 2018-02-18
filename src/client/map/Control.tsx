@@ -25,7 +25,7 @@ interface IProps {
 	position: Leaflet.ControlPosition
 }
 
-// React component that renders to Leaflet control container
+// React component that renders children content to Leaflet control container
 export abstract class Control extends React.Component<IProps> {
 
 	private leafletControl?: Leaflet.Control
@@ -33,7 +33,7 @@ export abstract class Control extends React.Component<IProps> {
 	public render(): React.ReactNode {
 
 		let {leafletControl} = this
-		const {map} = this.props
+		const {map, children} = this.props
 
 		// Register a simple Leaflet control (as a component portal target)
 		if (map && !leafletControl) {
@@ -55,12 +55,6 @@ export abstract class Control extends React.Component<IProps> {
 			return null
 		}
 
-		return ReactDOM.createPortal(
-			this.renderControl(),
-			container
-		)
+		return ReactDOM.createPortal(children, container)
 	}
-
-	// Actual render method for child classes
-	protected abstract renderControl(): React.ReactNode
 }

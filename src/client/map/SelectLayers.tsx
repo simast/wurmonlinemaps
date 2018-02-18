@@ -2,21 +2,21 @@ import React from 'react'
 import {observable, action} from 'mobx'
 import {observer} from 'mobx-react'
 
-import {history} from '../app'
-import {mapStore, IMapRouteParams} from './store'
-import {Control} from './Control'
-import {MapType, mapTypes, mapTypeNames} from '../../map-type'
-import {mapsByServer, mapTypesByServer} from '../../maps'
-import {Server, servers} from '../../server'
+import {mapStore} from './store'
+import {mapTypeNames} from '../../map-type'
+import {mapsByServer} from '../../maps'
+import {SelectServer} from './SelectServer'
+import {SelectType} from './SelectType'
+import {SelectVersion} from './SelectVersion'
 import style from './SelectLayers.less'
 
 // Component for selecting map layers
-@observer export class SelectLayers extends Control {
+@observer export class SelectLayers extends React.Component {
 
 	@observable private expanded = false
 
-	// Render control content
-	protected renderControl(): React.ReactNode {
+	// Render control
+	public render(): React.ReactNode {
 
 		return (
 			<div
@@ -29,7 +29,7 @@ import style from './SelectLayers.less'
 		)
 	}
 
-	// Render collapsed control view
+	// Render collapsed control
 	private renderCollapsed(): React.ReactNode {
 
 		const {server, type, version} = mapStore
@@ -47,99 +47,14 @@ import style from './SelectLayers.less'
 		)
 	}
 
-	// Render expanded control view
+	// Render expanded control
 	private renderExpanded(): React.ReactNode {
 
 		return (
 			<>
-				{this.renderServers()}
-				{this.renderTypes()}
-				{this.renderVersions()}
-			</>
-		)
-	}
-
-	// Render servers selection
-	private renderServers(): React.ReactNode {
-
-		const {server: selectedServer} = mapStore
-
-		return (
-			servers.map((server) => (
-				<div key={server}>
-					<label>
-						<input
-							type="radio"
-							name="server"
-							value={server}
-							checked={server === selectedServer}
-							onChange={this.handleServerChange}
-						/>
-						{mapsByServer[server].name}
-					</label>
-				</div>
-			))
-		)
-	}
-
-	// Render map types selection
-	private renderTypes(): React.ReactNode {
-
-		const {server, type: selectedType} = mapStore
-
-		if (!server) {
-			return null
-		}
-
-		return (
-			<>
-				<hr />
-				{mapTypesByServer[server].map((type) => (
-					<div key={type}>
-						<label>
-							<input
-								type="radio"
-								name="type"
-								value={type}
-								checked={type === selectedType}
-								onChange={this.handleTypeChange}
-							/>
-							{mapTypeNames[type]}
-						</label>
-					</div>
-				))}
-			</>
-		)
-	}
-
-	// Render map versions selection
-	private renderVersions(): React.ReactNode {
-
-		const {server, type, version: selectedVersion} = mapStore
-
-		if (!server || !type) {
-			return null
-		}
-
-		const versions = mapsByServer[server].versionsByType[type] || []
-
-		return (
-			<>
-				<hr />
-				{versions.map((version) => (
-					<div key={version}>
-						<label>
-							<input
-								type="radio"
-								name="version"
-								value={version}
-								checked={version === selectedVersion}
-								onChange={this.handleVersionChange}
-							/>
-							{version}
-						</label>
-					</div>
-				))}
+				<SelectServer />
+				<SelectType />
+				<SelectVersion />
 			</>
 		)
 	}
@@ -162,37 +77,5 @@ import style from './SelectLayers.less'
 	// Handle mouse leave event
 	private handleMouseLeave: React.MouseEventHandler<HTMLElement> = () => {
 		this.collapse()
-	}
-
-	// Handle server change event
-	private handleServerChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-		this.changeRouteUrl({server: event.target.value as Server})
-	}
-
-	// Handle map type change event
-	private handleTypeChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-		this.changeRouteUrl({type: event.target.value as MapType})
-	}
-
-	// Handle map version change event
-	private handleVersionChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-		this.changeRouteUrl({version: event.target.value})
-	}
-
-	// Change map route URL based on new layer selection values
-	private changeRouteUrl({
-		server = mapStore.server!,
-		type = mapStore.type,
-		version = mapStore.version
-	}: IMapRouteParams) {
-
-		const versions = mapsByServer[server].versionsByType[type!] || []
-
-		version = version !== versions[0] ? version : undefined
-		type = type !== mapTypes[0] || version ? type : undefined
-
-		const route = [server, type, version].filter(Boolean).join('/')
-
-		history.push(`/${route}`)
 	}
 }

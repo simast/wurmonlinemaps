@@ -5,9 +5,9 @@ import {Server, servers} from '../../server'
 import {MapType, mapTypes} from '../../map-type'
 import {mapsByServer, mapTypesByServer} from '../../maps'
 import {MAP_ROUTE} from '../../constants'
-import {routingStore} from '../app'
+import {history, routingStore} from '../app'
 
-export interface IMapRouteParams {
+interface IMapRouteParams {
 	readonly server?: Server
 	readonly type?: MapType
 	readonly version?: string
@@ -21,11 +21,23 @@ class MapStore {
 	@observable public version?: string
 
 	public constructor() {
-		autorun(this.syncMapRouteWithStore.bind(this))
+		autorun(this.syncRouteWithStore)
 	}
 
-	// Synchronize map store state from location pathname
-	private syncMapRouteWithStore() {
+	public setServer(server: Server) {
+		this.changeRouteUrl({server})
+	}
+
+	public setType(type: MapType) {
+		this.changeRouteUrl({type})
+	}
+
+	public setVersion(version: string) {
+		this.changeRouteUrl({version})
+	}
+
+	// Synchronize map store state from route URL
+	private syncRouteWithStore = () => {
 
 		const {location} = routingStore
 
@@ -80,6 +92,38 @@ class MapStore {
 			this.type = type
 			this.version = version
 		})
+	}
+
+	// Change map route URL and (indirectly) update store state
+	private changeRouteUrl({
+		server = this.server,
+		type = this.type,
+		version = this.version
+	}: IMapRouteParams = {}) {
+
+		if (server && type) {
+
+			const validVersions = mapsByServer[server].versionsByType[type] || []
+
+			// Ignore default or invalid version
+			if (version === validVersions[0] || !validVersions.includes(version)) {
+				version = undefined
+			}
+
+			const validTypes = mapTypesByServer[server]
+
+			// Ignore default or invalid type
+			if (!version && (type === mapTypes[0] || !validTypes.includes(type))) {
+				type = undefined
+			}
+		}
+		else {
+			type = version = undefined
+		}
+
+		const routePath = [server, type, version].filter(Boolean).join('/')
+
+		history.push(`/${routePath}`)
 	}
 }
 
