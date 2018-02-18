@@ -7,7 +7,7 @@ import {mapsByServer, mapTypesByServer} from '../../maps'
 import {MAP_ROUTE} from '../../constants'
 import {routingStore} from '../app'
 
-interface IMapRouteParams {
+export interface IMapRouteParams {
 	readonly server?: Server
 	readonly type?: MapType
 	readonly version?: string

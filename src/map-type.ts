@@ -6,3 +6,12 @@ export enum MapType {
 }
 
 export const mapTypes: ReadonlyArray<MapType> = Object.values(MapType)
+
+export const mapTypeNames: {
+	readonly [key in MapType]: string
+} = {
+	[MapType.Terrain]: 'Terrain',
+	[MapType.Isometric]: 'Isometric',
+	[MapType.Topographic]: 'Topographic',
+	[MapType.Routes]: 'Routes'
+}

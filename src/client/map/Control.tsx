@@ -10,7 +10,13 @@ interface ILeafletControl {
 const LeafletControl: ILeafletControl = Leaflet.Control.extend({
 
 	onAdd(): HTMLElement {
-		return document.createElement('div')
+
+		const container = document.createElement('div')
+
+		Leaflet.DomEvent.disableClickPropagation(container)
+		Leaflet.DomEvent.disableScrollPropagation(container)
+
+		return container
 	}
 })
 
