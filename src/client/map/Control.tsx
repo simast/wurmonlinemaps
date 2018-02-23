@@ -32,8 +32,8 @@ export abstract class Control extends React.Component<IProps> {
 
 	public render(): React.ReactNode {
 
-		let {leafletControl} = this
 		const {map, children} = this.props
+		let {leafletControl} = this
 
 		// Register a simple Leaflet control (as a component portal target)
 		if (map && !leafletControl) {

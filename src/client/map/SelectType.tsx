@@ -2,7 +2,7 @@ import React from 'react'
 import {observer} from 'mobx-react'
 
 import {mapStore} from './store'
-import {MapType, mapTypeNames} from '../../map-type'
+import {MapType, nameByMapType} from '../../map-type'
 import {mapTypesByServer} from '../../maps'
 
 // Select map type component
@@ -29,7 +29,7 @@ import {mapTypesByServer} from '../../maps'
 								checked={type === selectedType}
 								onChange={this.handleTypeChange}
 							/>
-							{mapTypeNames[type]}
+							{nameByMapType[type]}
 						</label>
 					</div>
 				))}

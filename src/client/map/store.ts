@@ -24,20 +24,20 @@ class MapStore {
 		autorun(this.syncRouteWithStore)
 	}
 
-	public setServer(server: Server) {
+	public setServer(server: Server): void {
 		this.changeRouteUrl({server})
 	}
 
-	public setType(type: MapType) {
+	public setType(type: MapType): void {
 		this.changeRouteUrl({type})
 	}
 
-	public setVersion(version: string) {
+	public setVersion(version: string): void {
 		this.changeRouteUrl({version})
 	}
 
 	// Synchronize map store state from route URL
-	private syncRouteWithStore = () => {
+	private syncRouteWithStore = (): void => {
 
 		const {location} = routingStore
 
@@ -99,7 +99,7 @@ class MapStore {
 		server = this.server,
 		type = this.type,
 		version = this.version
-	}: IMapRouteParams = {}) {
+	}: IMapRouteParams = {}): void {
 
 		if (server && type) {
 

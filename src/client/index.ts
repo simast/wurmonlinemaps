@@ -13,7 +13,7 @@ import styles from './index.less'
 useStrict(true)
 
 // Create main application container element
-const createAppContainer = () => {
+const createAppContainer = (): HTMLElement => {
 
 	const appContainer = document.createElement('div')
 	appContainer.className = styles.container!

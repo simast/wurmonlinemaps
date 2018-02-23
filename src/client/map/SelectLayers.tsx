@@ -3,7 +3,7 @@ import {observable, action} from 'mobx'
 import {observer} from 'mobx-react'
 
 import {mapStore} from './store'
-import {mapTypeNames} from '../../map-type'
+import {nameByMapType} from '../../map-type'
 import {mapsByServer} from '../../maps'
 import {SelectServer} from './SelectServer'
 import {SelectType} from './SelectType'
@@ -39,7 +39,7 @@ import style from './SelectLayers.less'
 				? (
 					<>
 						<strong>{mapsByServer[server].name}</strong>
-						{type && <div>{mapTypeNames[type]}</div>}
+						{type && <div>{nameByMapType[type]}</div>}
 						{version && <div>{version}</div>}
 					</>
 				)
@@ -60,12 +60,12 @@ import style from './SelectLayers.less'
 	}
 
 	// Expand control view
-	@action private expand() {
+	@action private expand(): void {
 		this.expanded = true
 	}
 
 	// Collapse control view
-	@action private collapse() {
+	@action private collapse(): void {
 		this.expanded = false
 	}
 

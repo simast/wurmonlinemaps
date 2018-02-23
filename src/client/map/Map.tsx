@@ -3,7 +3,7 @@ import Leaflet from 'leaflet'
 import {autorun} from 'mobx'
 
 import {STATIC_BASE_URL, MAP_TILE_SIZE} from '../../constants'
-import {mapsByServer, getMaxMapZoom} from '../../maps'
+import {mapsByServer, getMapMaxZoom} from '../../maps'
 import {mapStore} from './store'
 import {Control} from './Control'
 import {SelectLayers} from './SelectLayers'
@@ -11,7 +11,7 @@ import {SelectLayers} from './SelectLayers'
 import 'leaflet/dist/leaflet.css'
 import style from './Map.less'
 
-// Map component wrapping a Leaflet map instance
+// Component wrapping a Leaflet map instance
 export class Map extends React.Component {
 
 	private mapElement: HTMLDivElement | null = null
@@ -78,7 +78,7 @@ export class Map extends React.Component {
 		}
 
 		const {size} = mapsByServer[server]
-		const maxNativeZoom = getMaxMapZoom(size)
+		const maxNativeZoom = getMapMaxZoom(size)
 		const minMapZoom = Math.min(1, maxNativeZoom)
 
 		const bounds = Leaflet.latLngBounds(

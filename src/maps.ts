@@ -221,8 +221,7 @@ export const mapsByServer: {
 				'2017-12-31',
 				'2017-08-13',
 				'2016-11-01',
-				'2015-04-15',
-				'2011-11-01'
+				'2015-04-15'
 			],
 			[MapType.Terrain]: [
 				'2017-12-31',
@@ -329,6 +328,6 @@ export const mapTypesByServer: {
 )
 
 // Utility function used to get max zoom level based on server map size
-export const getMaxMapZoom = (mapSize: number): number => (
+export const getMapMaxZoom = (mapSize: number): number => (
 	Math.log(mapSize / MAP_TILE_SIZE) / Math.log(2)
 )
