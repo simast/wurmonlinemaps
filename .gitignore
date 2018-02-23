@@ -1,5 +1,6 @@
 /node_modules
 /dist
+/maps
 /.vscode
 /*.env
 .DS_Store
