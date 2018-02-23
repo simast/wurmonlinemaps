@@ -7,7 +7,7 @@ import OptimizeCssAssetsWebpackPlugin from 'optimize-css-assets-webpack-plugin'
 import {DIST_DIR, INDEX_FILE} from './src/constants'
 
 interface IEnvParams {
-	isProduction?: boolean
+	readonly isProduction?: boolean
 }
 
 // Webpack build configuration for client-side code distribution

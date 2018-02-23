@@ -6,7 +6,7 @@ interface IMap {
 	readonly name: string
 	readonly size: number
 	readonly versionsByType: {
-		[type in MapType]?: ReadonlyArray<string>
+		readonly [type in MapType]?: ReadonlyArray<string>
 	}
 }
 

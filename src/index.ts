@@ -4,6 +4,7 @@ import compressionMiddleware from 'compression'
 import webpack from 'webpack'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 import historyFallbackMiddleware from 'connect-history-api-fallback'
+import helmet from 'helmet'
 
 import webpackConfig from '../webpack.config'
 import {DIST_DIR, INDEX_FILE, MAP_ROUTE} from './constants'
@@ -16,12 +17,14 @@ const WEB_CONCURRENCY = process.env.WEB_CONCURRENCY || 1
 function start() {
 
 	const app = express()
-		.disable('x-powered-by')
 		.enable('case sensitive routing')
 		.enable('strict routing')
 		.enable('trust proxy')
 
-	// Enable gzip compression
+	// Use helmet middleware (for simple XSS/clickjacking protection and more)
+	app.use(helmet())
+
+	// Use gzip compression middleware
 	app.use(compressionMiddleware())
 
 	// Redirect direct index file request to root /
