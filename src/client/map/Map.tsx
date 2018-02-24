@@ -38,6 +38,7 @@ export class Map extends React.Component {
 		this.createMap()
 		this.forceUpdate()
 
+		autorun(this.updateInteraction)
 		autorun(this.updateTileLayer)
 	}
 
@@ -113,5 +114,40 @@ export class Map extends React.Component {
 		map.fitWorld({animate: false})
 
 		this.tileLayer = tileLayer
+	}
+
+	// Enable or disable map interaction based on map store state changes
+	private updateInteraction = (): void => {
+
+		const {map} = this
+
+		if (!map) {
+			return
+		}
+
+		const {server} = mapStore
+		const handlers = [
+			map.boxZoom,
+			map.doubleClickZoom,
+			map.dragging,
+			map.keyboard,
+			map.scrollWheelZoom,
+			map.tap,
+			map.touchZoom
+		]
+
+		for (const handler of handlers) {
+
+			if (!handler) {
+				continue
+			}
+
+			if (server) {
+				handler.enable()
+			}
+			else {
+				handler.disable()
+			}
+		}
 	}
 }
