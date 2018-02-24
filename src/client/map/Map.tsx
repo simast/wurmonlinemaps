@@ -4,6 +4,7 @@ import {autorun} from 'mobx'
 
 import {STATIC_BASE_URL, MAP_TILE_SIZE} from '../../constants'
 import {mapsByServer, getMapMaxZoom} from '../../maps'
+import {Server} from '../../server'
 import {mapStore} from './store'
 import {Control} from './Control'
 import {SelectLayers} from './SelectLayers'
@@ -17,6 +18,7 @@ export class Map extends React.Component {
 	private mapElement: HTMLDivElement | null = null
 	private map?: Leaflet.Map
 	private tileLayer?: Leaflet.TileLayer
+	private server?: Server
 
 	public shouldComponentUpdate(): boolean {
 		return false
@@ -67,53 +69,69 @@ export class Map extends React.Component {
 		}
 
 		const {server, type, version} = mapStore
+		const isNewServer = server !== this.server
 		let {tileLayer} = this
 
 		// Remove old tile layer
-		if (tileLayer) {
+		if (isNewServer && tileLayer) {
+
 			tileLayer.remove()
+			tileLayer = undefined
 		}
 
-		if (!server || !type || !version) {
-			return
-		}
+		if (server && type && version) {
 
-		const {size} = mapsByServer[server]
-		const maxNativeZoom = getMapMaxZoom(size)
-		const minMapZoom = Math.min(1, maxNativeZoom)
+			const tileLayerUrl = `${STATIC_BASE_URL}/${server}-${type}-${version}/{z}/{x}/{y}.{getExtension}`
 
-		const bounds = Leaflet.latLngBounds(
-			map.unproject([0, size], maxNativeZoom),
-			map.unproject([size, 0], maxNativeZoom)
-		)
-
-		// Create a new Leaflet TileLayer
-		tileLayer = Leaflet.tileLayer(
-			`${STATIC_BASE_URL}/${server}-${type}-${version}/{z}/{x}/{y}.{getExtension}`,
-			{
-				tileSize: MAP_TILE_SIZE,
-				updateInterval: 50,
-				noWrap: true,
-				bounds,
-				keepBuffer: 4,
-				minNativeZoom: 0,
-				maxNativeZoom,
-				className: style.tileLayer,
-				getExtension: ({z}: {z: number}): string => (
-					(z < maxNativeZoom)
-						? 'jpg' // Lower zoom levels use lossy JPG format
-						: 'png' // Higher zoom levels use lossless PNG format
-				)
+			// Re-use existing tile layer
+			if (tileLayer) {
+				tileLayer.setUrl(tileLayerUrl)
 			}
-		)
+			// Create a new tile layer
+			else {
 
-		map.setMaxBounds(bounds)
-		map.setMinZoom(minMapZoom)
-		map.setMaxZoom(maxNativeZoom + 2) // Allow over-zooming
-		map.addLayer(tileLayer)
-		map.fitWorld({animate: false})
+				const {size} = mapsByServer[server]
+				const maxNativeZoom = getMapMaxZoom(size)
+				const minMapZoom = Math.min(1, maxNativeZoom)
+
+				const bounds = Leaflet.latLngBounds(
+					map.unproject([0, size], maxNativeZoom),
+					map.unproject([size, 0], maxNativeZoom)
+				)
+
+				// Create a new Leaflet TileLayer
+				tileLayer = Leaflet.tileLayer(
+					tileLayerUrl,
+					{
+						tileSize: MAP_TILE_SIZE,
+						updateInterval: 50,
+						noWrap: true,
+						bounds,
+						keepBuffer: 4,
+						minNativeZoom: 0,
+						maxNativeZoom,
+						className: style.tileLayer,
+						getExtension: ({z}: {z: number}): string => (
+							(z < maxNativeZoom)
+								? 'jpg' // Lower zoom levels use lossy JPG format
+								: 'png' // Higher zoom levels use lossless PNG format
+						)
+					}
+				)
+
+				map.setMaxBounds(bounds)
+				map.setMinZoom(minMapZoom)
+				map.setMaxZoom(maxNativeZoom + 2) // Allow over-zooming
+				map.addLayer(tileLayer)
+			}
+
+			if (isNewServer) {
+				map.fitWorld({animate: false})
+			}
+		}
 
 		this.tileLayer = tileLayer
+		this.server = server
 	}
 
 	// Enable or disable map interaction based on map store state changes
