@@ -1,3 +1,14 @@
+/*
+	This script is used to cut and compress map image files into web map tiles.
+
+	1. Place any PNG or JPG map image files in /maps directory (at project root).
+	2. Run "npx ts-node scripts/build-maps.ts" command to execute this script.
+	3. Web map tiles will be created in /maps directory when script has completed.
+
+	Please note that you need to install GraphicsMagick on you system for this script
+	to work. Download GraphicsMagick from: http://www.graphicsmagick.org/
+*/
+
 import os from 'os'
 import fs from 'fs'
 import path from 'path'
@@ -5,9 +16,7 @@ import glob from 'glob'
 import {execFile} from 'child_process'
 import gm from 'gm'
 import optipng from 'optipng-bin'
-
-// @ts-ignore
-import mapslice from 'mapslice'
+import MapSlicer from 'mapslice'
 
 import {MAP_TILE_SIZE} from '../src/constants'
 import {getMapMaxZoom} from '../src/maps'
@@ -17,7 +26,7 @@ import {getMapMaxZoom} from '../src/maps'
 const MAPS_DIR = 'maps'
 
 // Get a list of map image files
-const mapFiles = glob.sync(`${MAPS_DIR}/*`, {
+const mapFiles = glob.sync(`${MAPS_DIR}/*.@(png|jpg)`, {
 	nodir: true
 })
 
@@ -26,11 +35,14 @@ const getTileFileId = (mapId: string, tileFile: string): string => (
 )
 
 // Cut map image file into web map tiles
-const cutMapIntoTiles = (mapId: string, mapFile: string) => new Promise(async (resolve, reject) => {
+const cutMapIntoTiles = (
+	mapId: string,
+	mapFile: string
+) => new Promise<void>(async (resolve, reject) => {
 
 	let lastProgressPercent: number
 
-	const mapSlicer = mapslice({
+	const mapSlicer = new MapSlicer({
 		file: mapFile,
 		output: path.join(MAPS_DIR, mapId, '{z}/{x}/{y}.png'),
 		tileSize: MAP_TILE_SIZE,
@@ -39,13 +51,13 @@ const cutMapIntoTiles = (mapId: string, mapFile: string) => new Promise(async (r
 		parallelLimit: os.cpus().length
 	})
 
-	mapSlicer.on('start', (files: number) => {
+	mapSlicer.on('start', (files) => {
 		console.info(`${mapId}: Starting to process ${files} files.`)
 	})
 
 	mapSlicer.on('error', reject)
 
-	mapSlicer.on('progress', (progress: number) => {
+	mapSlicer.on('progress', (progress) => {
 
 		const progressPercent = Math.round(progress * 100)
 
@@ -66,7 +78,9 @@ const cutMapIntoTiles = (mapId: string, mapFile: string) => new Promise(async (r
 })
 
 // Get map file maximum zoom level
-const getMapFileMaxZoom = (mapFile: string) => new Promise(async (resolve, reject) => {
+const getMapFileMaxZoom = (
+	mapFile: string
+) => new Promise<number>(async (resolve, reject) => {
 
 	gm(mapFile).size((error, size) => {
 
@@ -79,7 +93,10 @@ const getMapFileMaxZoom = (mapFile: string) => new Promise(async (resolve, rejec
 })
 
 // Convert a single low zoom PNG tile to JPG file
-const convertLowZoomMapTileToJPG = (mapId: string, tileFile: string) => new Promise(async (resolve, reject) => {
+const convertLowZoomMapTileToJPG = (
+	mapId: string,
+	tileFile: string
+) => new Promise<void>(async (resolve, reject) => {
 
 	console.log(`${mapId}: Converting ${getTileFileId(mapId, tileFile)}`)
 
@@ -118,7 +135,10 @@ const convertLowZoomMapTilesToJPG = async (mapId: string, mapFile: string) => {
 }
 
 // Optimize a single PNG map tile
-const optimizePNGMapTile = (mapId: string, tileFile: string) => new Promise(async (resolve, reject) => {
+const optimizePNGMapTile = (
+	mapId: string,
+	tileFile: string
+) => new Promise<void>(async (resolve, reject) => {
 
 	console.log(`${mapId}: Optimizing ${getTileFileId(mapId, tileFile)}`)
 
