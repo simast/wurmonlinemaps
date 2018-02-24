@@ -92,7 +92,6 @@ export class Map extends React.Component {
 
 				const {size} = mapsByServer[server]
 				const maxNativeZoom = getMapMaxZoom(size)
-				const minMapZoom = Math.min(1, maxNativeZoom)
 
 				const bounds = Leaflet.latLngBounds(
 					map.unproject([0, size], maxNativeZoom),
@@ -120,13 +119,21 @@ export class Map extends React.Component {
 				)
 
 				map.setMaxBounds(bounds)
-				map.setMinZoom(minMapZoom)
 				map.setMaxZoom(maxNativeZoom + 2) // Allow over-zooming
 				map.addLayer(tileLayer)
 			}
 
 			if (isNewServer) {
-				map.fitWorld({animate: false})
+
+				const padding = Math.round(MAP_TILE_SIZE / 2)
+
+				map.fitWorld({
+					animate: false,
+					padding: [-padding, -padding]
+				})
+
+				// Lock min zoom level
+				map.setMinZoom(map.getZoom())
 			}
 		}
 

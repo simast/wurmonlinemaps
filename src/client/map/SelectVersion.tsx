@@ -3,6 +3,7 @@ import {observer} from 'mobx-react'
 
 import {mapStore} from './store'
 import {mapsByServer} from '../../maps'
+import style from './SelectLayers.less'
 
 // Select map version component
 @observer export class SelectVersion extends React.Component {
@@ -18,23 +19,21 @@ import {mapsByServer} from '../../maps'
 		const versions = mapsByServer[server].versionsByType[type] || []
 
 		return (
-			<>
-				<hr />
+			<div className={style.selectOptions}>
+				<h3>Version</h3>
 				{versions.map((version) => (
-					<div key={version}>
-						<label>
-							<input
-								type="radio"
-								name="version"
-								value={version}
-								checked={version === selectedVersion}
-								onChange={this.handleVersionChange}
-							/>
-							{version}
-						</label>
-					</div>
+					<label key={version}>
+						<input
+							type="radio"
+							name="version"
+							value={version}
+							checked={version === selectedVersion}
+							onChange={this.handleVersionChange}
+						/>
+						{version}
+					</label>
 				))}
-			</>
+			</div>
 		)
 	}
 

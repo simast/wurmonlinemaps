@@ -1,5 +1,60 @@
+@spacing: 12px;
+
 .container {
+	cursor: default;
 	box-shadow: 0 1px 5px rgba(0,0,0,0.4);
 	background: #fff;
 	border-radius: 5px;
+	padding: @spacing 0;
+}
+
+.selection {
+
+	padding: 0 @spacing;
+
+	h1 {
+		padding: 0;
+		margin: 0;
+		font-size: 12px;
+
+		span {
+			font-weight: normal;
+			margin-left: 5px;
+		}
+	}
+
+	div {
+		text-align: right;
+	}
+}
+
+.selectOptions {
+
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+
+	label, input {
+		cursor: pointer !important;
+	}
+
+	label {
+		display: inline-block;
+		margin: 0 @spacing;
+		line-height: 21px;
+	}
+
+	input {
+		margin: 0 5px 0 0;
+		padding: 0;
+	}
+
+	h3 {
+		padding: 0 @spacing 5px @spacing;
+		margin: @spacing 0;
+		font-weight: bold;
+		font-size: 12px;
+		border-bottom: 1px solid #ccc;
+		align-self: stretch;
+	}
 }

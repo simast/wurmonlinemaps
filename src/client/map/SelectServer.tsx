@@ -4,6 +4,7 @@ import {observer} from 'mobx-react'
 import {mapStore} from './store'
 import {mapsByServer} from '../../maps'
 import {Server, servers} from '../../server'
+import style from './SelectLayers.less'
 
 // Select map server component
 @observer export class SelectServer extends React.Component {
@@ -13,9 +14,9 @@ import {Server, servers} from '../../server'
 		const {server: selectedServer} = mapStore
 
 		return (
-			servers.map((server) => (
-				<div key={server}>
-					<label>
+			<div className={style.selectOptions}>
+				{servers.map((server) => (
+					<label key={server}>
 						<input
 							type="radio"
 							name="server"
@@ -25,8 +26,8 @@ import {Server, servers} from '../../server'
 						/>
 						{mapsByServer[server].name}
 					</label>
-				</div>
-			))
+				))}
+			</div>
 		)
 	}
 

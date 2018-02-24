@@ -4,6 +4,7 @@ import {observer} from 'mobx-react'
 import {mapStore} from './store'
 import {MapType, nameByMapType} from '../../map-type'
 import {mapTypesByServer} from '../../maps'
+import style from './SelectLayers.less'
 
 // Select map type component
 @observer export class SelectType extends React.Component {
@@ -17,23 +18,21 @@ import {mapTypesByServer} from '../../maps'
 		}
 
 		return (
-			<>
-				<hr />
+			<div className={style.selectOptions}>
+				<h3>Type</h3>
 				{mapTypesByServer[server].map((type) => (
-					<div key={type}>
-						<label>
-							<input
-								type="radio"
-								name="type"
-								value={type}
-								checked={type === selectedType}
-								onChange={this.handleTypeChange}
-							/>
-							{nameByMapType[type]}
-						</label>
-					</div>
+					<label key={type}>
+						<input
+							type="radio"
+							name="type"
+							value={type}
+							checked={type === selectedType}
+							onChange={this.handleTypeChange}
+						/>
+						{nameByMapType[type]}
+					</label>
 				))}
-			</>
+			</div>
 		)
 	}
 

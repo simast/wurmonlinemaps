@@ -37,11 +37,13 @@ import style from './SelectLayers.less'
 		return (
 			server
 				? (
-					<>
-						<strong>{mapsByServer[server].name}</strong>
-						{type && <div>{nameByMapType[type]}</div>}
+					<div className={style.selection}>
+						<h1>
+							{mapsByServer[server].name}
+							{type && <span>({nameByMapType[type]})</span>}
+						</h1>
 						{version && <div>{version}</div>}
-					</>
+					</div>
 				)
 				: 'Select server'
 		)
