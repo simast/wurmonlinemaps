@@ -26,11 +26,11 @@ export class Map extends React.Component {
 
 	public render(): React.ReactNode {
 
+		const {map} = this
+
 		return (
 			<div className={style.container} ref={(el) => {this.mapElement = el}}>
-				<Control map={this.map} position="topright">
-					<SelectLayers />
-				</Control>
+				<Control map={map} position="topright" expandable component={SelectLayers} />
 			</div>
 		)
 	}

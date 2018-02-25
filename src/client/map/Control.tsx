@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Leaflet from 'leaflet'
+import {observable, action} from 'mobx'
+import {observer} from 'mobx-react'
 
 interface ILeafletControl {
 	new(options?: Leaflet.ControlOptions): Leaflet.Control
@@ -20,30 +22,33 @@ const LeafletControl: ILeafletControl = Leaflet.Control.extend({
 	}
 })
 
+export interface IControlProps {
+	expanded: boolean
+}
+
 interface IProps {
 	map?: Leaflet.Map
 	position: Leaflet.ControlPosition
+	expandable?: boolean
+	component: React.ComponentType<IControlProps>
 }
 
-// React component that renders children content to Leaflet control container
-export abstract class Control extends React.Component<IProps> {
+// React component used as a wrapper for Leaflet control
+@observer export class Control extends React.Component<IProps> {
 
+	@observable private expanded = false
 	private leafletControl?: Leaflet.Control
 
+	// Render control
 	public render(): React.ReactNode {
 
-		const {map, children} = this.props
-		let {leafletControl} = this
+		const {map, component} = this.props
 
-		// Register a simple Leaflet control (as a component portal target)
-		if (map && !leafletControl) {
-
-			leafletControl = this.leafletControl = new LeafletControl({
-				position: this.props.position
-			})
-
-			map.addControl(leafletControl)
+		if (map) {
+			this.registerLeafletControl(map)
 		}
+
+		const {leafletControl} = this
 
 		if (!leafletControl) {
 			return null
@@ -55,6 +60,68 @@ export abstract class Control extends React.Component<IProps> {
 			return null
 		}
 
-		return ReactDOM.createPortal(children, container)
+		const props: IControlProps = {
+			expanded: this.expanded
+		}
+
+		return ReactDOM.createPortal(
+			React.createElement(component, props),
+			container
+		)
+	}
+
+	// Register a simple Leaflet control (as a component portal target)
+	private registerLeafletControl(map: Leaflet.Map) {
+
+		let {leafletControl} = this
+
+		if (leafletControl) {
+			return
+		}
+
+		const {
+			position,
+			expandable = false
+		} = this.props
+
+		leafletControl = new LeafletControl({position})
+
+		map.addControl(leafletControl)
+
+		const container = leafletControl.getContainer()
+
+		if (expandable && container) {
+
+			Leaflet.DomEvent.on(container, 'click', this.handleClick)
+			map.on('mousedown zoomstart keypress', this.handleMapInteraction)
+		}
+
+		this.leafletControl = leafletControl
+	}
+
+	// Expand control view
+	@action private expand(): void {
+		this.expanded = true
+	}
+
+	// Collapse control view
+	@action private collapse(): void {
+		this.expanded = false
+	}
+
+	// Handle click event
+	private handleClick: Leaflet.DomEvent.EventHandlerFn = () => {
+
+		if (!this.expanded) {
+			this.expand()
+		}
+	}
+
+	// Handle map interaction events
+	private handleMapInteraction: Leaflet.LeafletEventHandlerFn = () => {
+
+		if (this.expanded) {
+			this.collapse()
+		}
 	}
 }

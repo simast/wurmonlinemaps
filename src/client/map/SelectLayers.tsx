@@ -1,30 +1,26 @@
 import React from 'react'
-import {observable, action} from 'mobx'
-import {observer} from 'mobx-react'
+import Leaflet from 'leaflet'
 
 import {mapStore} from './store'
 import {nameByMapType} from '../../map-type'
 import {mapsByServer} from '../../maps'
+import {IControlProps} from './Control'
 import {SelectServer} from './SelectServer'
 import {SelectType} from './SelectType'
 import {SelectVersion} from './SelectVersion'
 import style from './SelectLayers.less'
 
 // Component for selecting map layers
-@observer export class SelectLayers extends React.Component {
-
-	@observable private expanded = false
+export class SelectLayers extends React.Component<IControlProps> {
 
 	// Render control
 	public render(): React.ReactNode {
 
+		const {expanded} = this.props
+
 		return (
-			<div
-				className={style.container}
-				onMouseEnter={this.handleMouseEnter}
-				onMouseLeave={this.handleMouseLeave}
-			>
-				{this.expanded ? this.renderExpanded() : this.renderCollapsed()}
+			<div className={style.container}>
+				{expanded ? this.renderExpanded() : this.renderCollapsed()}
 			</div>
 		)
 	}
@@ -45,7 +41,7 @@ import style from './SelectLayers.less'
 						{version && <div>{version}</div>}
 					</div>
 				)
-				: 'Select server'
+				: 'Select map'
 		)
 	}
 
@@ -59,25 +55,5 @@ import style from './SelectLayers.less'
 				<SelectVersion />
 			</>
 		)
-	}
-
-	// Expand control view
-	@action private expand(): void {
-		this.expanded = true
-	}
-
-	// Collapse control view
-	@action private collapse(): void {
-		this.expanded = false
-	}
-
-	// Handle mouse enter event
-	private handleMouseEnter: React.MouseEventHandler<HTMLElement> = () => {
-		this.expand()
-	}
-
-	// Handle mouse leave event
-	private handleMouseLeave: React.MouseEventHandler<HTMLElement> = () => {
-		this.collapse()
 	}
 }
