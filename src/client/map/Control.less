@@ -1,0 +1,23 @@
+.base {
+	cursor: default !important;
+	box-shadow: 0 1px 5px rgba(0,0,0,0.35);
+	background: #000;
+	color: #fff;
+	border-radius: 5px;
+	user-select: none;
+}
+
+.expandable {
+	composes: base;
+
+	&:not(.expanded) {
+		cursor: pointer !important;
+	}
+}
+
+.expanded {
+	composes: expandable;
+
+	background-color: #fff;
+	color: #000;
+}

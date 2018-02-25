@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom'
 import Leaflet from 'leaflet'
 import {observable, action} from 'mobx'
 import {observer} from 'mobx-react'
+import classNames from 'classnames'
+
+import styles from './Control.less'
 
 interface ILeafletControl {
 	new(options?: Leaflet.ControlOptions): Leaflet.Control
@@ -42,13 +45,13 @@ interface IProps {
 	// Render control
 	public render(): React.ReactNode {
 
-		const {map, component} = this.props
+		const {map, component, expandable} = this.props
 
 		if (map) {
 			this.registerLeafletControl(map)
 		}
 
-		const {leafletControl} = this
+		const {leafletControl, expanded} = this
 
 		if (!leafletControl) {
 			return null
@@ -60,8 +63,13 @@ interface IProps {
 			return null
 		}
 
+		container.className = classNames(
+			'leaflet-control',
+			expandable ? (expanded ? styles.expanded : styles.expandable) : styles.base
+		)
+
 		const props: IControlProps = {
-			expanded: this.expanded
+			expanded
 		}
 
 		return ReactDOM.createPortal(
@@ -88,12 +96,14 @@ interface IProps {
 
 		map.addControl(leafletControl)
 
-		const container = leafletControl.getContainer()
+		const controlContainer = leafletControl.getContainer()
+		const mapContainer = map.getContainer()
 
-		if (expandable && container) {
+		if (expandable && controlContainer) {
 
-			Leaflet.DomEvent.on(container, 'click', this.handleClick)
-			map.on('mousedown zoomstart keypress', this.handleMapInteraction)
+			Leaflet.DomEvent.on(controlContainer, 'click', this.handleClick)
+			Leaflet.DomEvent.on(mapContainer, 'mousedown touchstart', this.handleMapInteraction)
+			map.on('mousedown keypress', this.handleMapInteraction)
 		}
 
 		this.leafletControl = leafletControl
@@ -101,27 +111,27 @@ interface IProps {
 
 	// Expand control view
 	@action private expand(): void {
-		this.expanded = true
+
+		if (!this.expanded) {
+			this.expanded = true
+		}
 	}
 
 	// Collapse control view
 	@action private collapse(): void {
-		this.expanded = false
+
+		if (this.expanded) {
+			this.expanded = false
+		}
 	}
 
 	// Handle click event
 	private handleClick: Leaflet.DomEvent.EventHandlerFn = () => {
-
-		if (!this.expanded) {
-			this.expand()
-		}
+		this.expand()
 	}
 
 	// Handle map interaction events
 	private handleMapInteraction: Leaflet.LeafletEventHandlerFn = () => {
-
-		if (this.expanded) {
-			this.collapse()
-		}
+		this.collapse()
 	}
 }

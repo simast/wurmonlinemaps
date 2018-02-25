@@ -10,7 +10,7 @@ import {Control} from './Control'
 import {SelectLayers} from './SelectLayers'
 
 import 'leaflet/dist/leaflet.css'
-import style from './Map.less'
+import styles from './Map.less'
 
 // Component wrapping a Leaflet map instance
 export class Map extends React.Component {
@@ -29,8 +29,9 @@ export class Map extends React.Component {
 		const {map} = this
 
 		return (
-			<div className={style.container} ref={(el) => {this.mapElement = el}}>
+			<div className={styles.container} ref={(el) => {this.mapElement = el}}>
 				<Control map={map} position="topright" expandable component={SelectLayers} />
+				<div className={styles.vignette} />
 			</div>
 		)
 	}
@@ -109,7 +110,7 @@ export class Map extends React.Component {
 						keepBuffer: 4,
 						minNativeZoom: 0,
 						maxNativeZoom,
-						className: style.tileLayer,
+						className: styles.tileLayer,
 						getExtension: ({z}: {z: number}): string => (
 							(z < maxNativeZoom)
 								? 'jpg' // Lower zoom levels use lossy JPG format

@@ -1,5 +1,4 @@
 import React from 'react'
-import Leaflet from 'leaflet'
 
 import {mapStore} from './store'
 import {nameByMapType} from '../../map-type'
