@@ -1,7 +1,7 @@
 declare module '*.less' {
 
 	interface IModuleLocals {
-		[key: string]: string | undefined
+		readonly [key: string]: string
 	}
 
 	const moduleLocals: IModuleLocals

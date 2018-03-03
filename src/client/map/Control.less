@@ -1,10 +1,12 @@
+@collapsedBgColor: rgba(0,0,0,0.6);
+
 .base {
 	cursor: default !important;
-	box-shadow: 0 1px 5px rgba(0,0,0,0.35);
-	background: #000;
+	user-select: none;
+	background-color: @collapsedBgColor;
 	color: #fff;
 	border-radius: 5px;
-	user-select: none;
+	box-shadow: 0 0 5px 1px fade(@collapsedBgColor, 35%);
 }
 
 .expandable {
@@ -12,6 +14,11 @@
 
 	&:not(.expanded) {
 		cursor: pointer !important;
+		border: 1px solid transparent;
+
+		&:hover {
+			border-color: fade(#fff, 50%);
+		}
 	}
 }
 

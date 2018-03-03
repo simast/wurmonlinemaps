@@ -5,6 +5,7 @@ import {MAP_TILE_SIZE} from './constants'
 interface IMap {
 	readonly name: string
 	readonly size: number
+	readonly hasPvP: boolean
 	readonly versionsByType: {
 		readonly [type in MapType]?: ReadonlyArray<string>
 	}
@@ -17,6 +18,7 @@ export const mapsByServer: {
 	[Server.Independence]: {
 		name: 'Independence',
 		size: 4096,
+		hasPvP: false,
 		versionsByType: {
 			[MapType.Isometric]: [
 				'2017-12-31',
@@ -43,6 +45,7 @@ export const mapsByServer: {
 	[Server.Deliverance]: {
 		name: 'Deliverance',
 		size: 2048,
+		hasPvP: false,
 		versionsByType: {
 			[MapType.Isometric]: [
 				'2017-12-31',
@@ -68,6 +71,7 @@ export const mapsByServer: {
 	[Server.Exodus]: {
 		name: 'Exodus',
 		size: 2048,
+		hasPvP: false,
 		versionsByType: {
 			[MapType.Isometric]: [
 				'2017-12-31',
@@ -93,6 +97,7 @@ export const mapsByServer: {
 	[Server.Celebration]: {
 		name: 'Celebration',
 		size: 2048,
+		hasPvP: false,
 		versionsByType: {
 			[MapType.Isometric]: [
 				'2017-12-31',
@@ -118,6 +123,7 @@ export const mapsByServer: {
 	[Server.Pristine]: {
 		name: 'Pristine',
 		size: 2048,
+		hasPvP: false,
 		versionsByType: {
 			[MapType.Isometric]: [
 				'2017-12-31',
@@ -143,6 +149,7 @@ export const mapsByServer: {
 	[Server.Release]: {
 		name: 'Release',
 		size: 2048,
+		hasPvP: false,
 		versionsByType: {
 			[MapType.Isometric]: [
 				'2017-12-31',
@@ -168,6 +175,7 @@ export const mapsByServer: {
 	[Server.Xanadu]: {
 		name: 'Xanadu',
 		size: 8192,
+		hasPvP: false,
 		versionsByType: {
 			[MapType.Isometric]: [
 				'2017-12-31',
@@ -193,6 +201,7 @@ export const mapsByServer: {
 	[Server.Chaos]: {
 		name: 'Chaos',
 		size: 4096,
+		hasPvP: true,
 		versionsByType: {
 			[MapType.Isometric]: [
 				'2017-12-31',
@@ -216,6 +225,7 @@ export const mapsByServer: {
 	[Server.Elevation]: {
 		name: 'Elevation',
 		size: 4096,
+		hasPvP: true,
 		versionsByType: {
 			[MapType.Isometric]: [
 				'2017-12-31',
@@ -238,6 +248,7 @@ export const mapsByServer: {
 	[Server.Desertion]: {
 		name: 'Desertion',
 		size: 2048,
+		hasPvP: true,
 		versionsByType: {
 			[MapType.Isometric]: [
 				'2017-12-31',
@@ -260,6 +271,7 @@ export const mapsByServer: {
 	[Server.Affliction]: {
 		name: 'Affliction',
 		size: 2048,
+		hasPvP: true,
 		versionsByType: {
 			[MapType.Isometric]: [
 				'2017-12-31',
@@ -281,6 +293,7 @@ export const mapsByServer: {
 	[Server.Serenity]: {
 		name: 'Serenity',
 		size: 2048,
+		hasPvP: true,
 		versionsByType: {
 			[MapType.Isometric]: [
 				'2017-12-31',

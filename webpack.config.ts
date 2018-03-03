@@ -71,8 +71,7 @@ export default ({
 						{
 							loader: 'css-loader',
 							options: {
-								modules: true,
-								camelCase: 'only'
+								modules: true
 							}
 						},
 						{

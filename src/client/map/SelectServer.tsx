@@ -4,7 +4,7 @@ import {observer} from 'mobx-react'
 import {mapStore} from './store'
 import {mapsByServer} from '../../maps'
 import {Server, servers} from '../../server'
-import style from './SelectLayers.less'
+import styles from './SelectLayers.less'
 
 // Select map server component
 @observer export class SelectServer extends React.Component {
@@ -14,7 +14,7 @@ import style from './SelectLayers.less'
 		const {server: selectedServer} = mapStore
 
 		return (
-			<div className={style.selectOptions}>
+			<div className={styles.selectOptions}>
 				{servers.map((server) => (
 					<label key={server}>
 						<input

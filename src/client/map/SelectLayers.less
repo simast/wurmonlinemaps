@@ -4,19 +4,25 @@
 	padding: @spacing 0;
 }
 
-.selection {
-
+// Selected map block
+.selected {
 	padding: 0 @spacing;
 
+	h1, span {
+		font-size: 14px;
+	}
+
 	h1 {
+		display: inline-block;
+		font-weight: bold;
 		padding: 0;
 		margin: 0;
-		font-size: 12px;
+		color: #98c997;
+		text-shadow: 0 1px fade(#000, 25%);
+	}
 
-		span {
-			font-weight: normal;
-			margin-left: 5px;
-		}
+	span {
+		margin-left: 5px;
 	}
 
 	div {
@@ -24,8 +30,23 @@
 	}
 }
 
-.selectOptions {
+// Selected map block (where PVP is enabled)
+.selectedWithPVP {
+	composes: selected;
 
+	h1 {
+		color: #f9aa43;
+	}
+}
+
+// No selection block
+.noSelection {
+	padding: 0 @spacing;
+	font-size: 14px;
+}
+
+// Select map options block
+.selectOptions {
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;

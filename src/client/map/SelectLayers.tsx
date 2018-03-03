@@ -7,7 +7,7 @@ import {IControlProps} from './Control'
 import {SelectServer} from './SelectServer'
 import {SelectType} from './SelectType'
 import {SelectVersion} from './SelectVersion'
-import style from './SelectLayers.less'
+import styles from './SelectLayers.less'
 
 // Component for selecting map layers
 export class SelectLayers extends React.Component<IControlProps> {
@@ -18,7 +18,7 @@ export class SelectLayers extends React.Component<IControlProps> {
 		const {expanded} = this.props
 
 		return (
-			<div className={style.container}>
+			<div className={styles.container}>
 				{expanded ? this.renderExpanded() : this.renderCollapsed()}
 			</div>
 		)
@@ -27,20 +27,22 @@ export class SelectLayers extends React.Component<IControlProps> {
 	// Render collapsed control
 	private renderCollapsed(): React.ReactNode {
 
-		const {server, type, version} = mapStore
+		const {server, type} = mapStore
+		const mapData = server && mapsByServer[server]
 
 		return (
-			server
+			mapData
 				? (
-					<div className={style.selection}>
-						<h1>
-							{mapsByServer[server].name}
-							{type && <span>({nameByMapType[type]})</span>}
-						</h1>
-						{version && <div>{version}</div>}
+					<div className={mapData.hasPvP ? styles.selectedWithPVP : styles.selected}>
+						<h1>{mapData.name}</h1>
+						{type && <span>{nameByMapType[type]}</span>}
 					</div>
 				)
-				: 'Select map'
+				: (
+					<div className={styles.noSelection}>
+						Select map
+					</div>
+				)
 		)
 	}
 
