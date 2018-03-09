@@ -15,6 +15,7 @@ interface IEnvParams {
 export default ({
 	isProduction = false
 }: IEnvParams = {}): webpack.Configuration => ({
+	mode: isProduction ? 'production' : 'development',
 	entry: {
 		app: './src/client/index.ts'
 	},
@@ -23,7 +24,6 @@ export default ({
 		path: path.resolve(__dirname, DIST_DIR),
 		filename: '[name].js'
 	},
-	devtool: isProduction ? false : 'eval-source-map',
 	resolve: {
 		extensions: ['.ts', '.tsx', '.js']
 	},
@@ -82,7 +82,10 @@ export default ({
 			}
 		]
 	},
-	plugins: getPlugins(isProduction)
+	plugins: getPlugins(isProduction),
+	stats: {
+		warnings: false
+	}
 })
 
 // Build a list of webpack plugins
@@ -109,19 +112,6 @@ function getPlugins(isProduction: boolean): webpack.Plugin[] {
 	if (!isProduction) {
 		return plugins
 	}
-
-	// Enable module scope hoisting
-	plugins.push(new webpack.optimize.ModuleConcatenationPlugin())
-
-	// Inline "process.env.NODE_ENV" checks for dead code elimination in production builds
-	plugins.push(new webpack.DefinePlugin({
-		'process.env': {
-			NODE_ENV: JSON.stringify(process.env.NODE_ENV)
-		}
-	}))
-
-	// Minify with dead code elimination
-	plugins.push(new webpack.optimize.UglifyJsPlugin())
 
 	// Add chunk banner comments
 	plugins.push(new webpack.BannerPlugin(
