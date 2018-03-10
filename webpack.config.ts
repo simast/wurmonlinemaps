@@ -97,6 +97,7 @@ function getPlugins(isProduction: boolean): webpack.Plugin[] {
 	plugins.push(new HtmlWebpackPlugin({
 		title: 'Wurm Online Maps',
 		filename: INDEX_FILE,
+		favicon: 'assets/favicon.png',
 		minify: isProduction && {
 			collapseWhitespace: true
 		}
