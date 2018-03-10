@@ -120,6 +120,7 @@ export class Map extends React.Component {
 				)
 
 				map.setMaxBounds(bounds)
+				map.setZoom(0, {animate: false})
 				map.setMaxZoom(maxNativeZoom + 2) // Allow over-zooming
 				map.addLayer(tileLayer)
 			}
