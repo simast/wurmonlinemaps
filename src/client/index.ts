@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {useStrict} from 'mobx'
+import {configure} from 'mobx'
 
 // Enable required core-js polyfills
 import 'core-js/fn/object/values'
@@ -10,7 +10,7 @@ import {Application} from './app'
 import styles from './index.less'
 
 // NOTE: Strict mode makes MobX require actions to modify state!
-useStrict(true)
+configure({enforceActions: true})
 
 // Create main application container element
 const createAppContainer = (): HTMLElement => {

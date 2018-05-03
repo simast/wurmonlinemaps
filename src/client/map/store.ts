@@ -106,7 +106,7 @@ class MapStore {
 			const validVersions = mapsByServer[server].versionsByType[type] || []
 
 			// Ignore default or invalid version
-			if (version === validVersions[0] || !validVersions.includes(version)) {
+			if (version === validVersions[0] || !validVersions.includes(version!)) {
 				version = undefined
 			}
 
