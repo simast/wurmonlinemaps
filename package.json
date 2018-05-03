@@ -11,7 +11,7 @@
 		"url": "https://github.com/simast/wurmonlinemaps.git"
 	},
 	"engines": {
-		"node": "9.8.0"
+		"node": "10.0.0"
 	},
 	"scripts": {
 		"start": "ts-node .",
