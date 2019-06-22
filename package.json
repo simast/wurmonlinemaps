@@ -19,7 +19,6 @@
 		"build:maps": "ts-node --files scripts/build-maps.ts",
 		"lint": "tslint --format stylish \"**/*.ts?(x)\"",
 		"clean": "rimraf dist",
-		"precommit": "yarn lint",
 		"heroku-postbuild": "yarn build"
 	},
 	"dependencies": {
@@ -87,5 +86,10 @@
 		"tslint": "5.18.0",
 		"tslint-eslint-rules": "5.4.0",
 		"tslint-react": "4.0.0"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "yarn lint"
+		}
 	}
 }
