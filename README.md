@@ -8,14 +8,14 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-Install latest [Node.js](https://nodejs.org/en/). As an optional step also consider installing [TSLint](https://palantir.github.io/tslint/usage/third-party-tools/) and [EditorConfig](http://editorconfig.org/#download) extensions for your favorite editor - this will help you apply project specific source code style rules from within the editor.
+Install latest [Node.js](https://nodejs.org/en/) and [Yarn](https://yarnpkg.com/en/). As an optional step also consider installing [TSLint](https://palantir.github.io/tslint/usage/third-party-tools/) and [EditorConfig](http://editorconfig.org/#download) extensions for your favorite editor - this will help you apply project specific source code style rules from within the editor.
 
 ### Install dependencies
 
 Clone this repository with git and install third-party dependencies:
 
 ```
-npm install
+yarn
 ```
 
 ### Run application on localhost
@@ -23,7 +23,7 @@ npm install
 You can start a local development server (available at http://localhost:5000) using:
 
 ```
-npm start
+yarn start
 ```
 
 If you then make any changes to client-side application code - simply reload the application in your browser (you do not need to restart the server).

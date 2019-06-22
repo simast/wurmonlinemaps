@@ -14,8 +14,9 @@
 		"node": ">= 12.4.0"
 	},
 	"scripts": {
-		"start": "ts-node .",
+		"start": "ts-node --files .",
 		"build": "webpack --progress --env.isProduction",
+		"build:maps": "ts-node --files scripts/build-maps.ts",
 		"lint": "tslint --format stylish \"**/*.ts?(x)\"",
 		"clean": "rimraf dist",
 		"precommit": "yarn lint",
@@ -59,12 +60,10 @@
 		"leaflet": "1.5.1",
 		"less": "3.9.0",
 		"less-loader": "5.0.0",
-		"mapslice": "1.3.0",
 		"mobx": "5.10.1",
 		"mobx-react": "6.1.1",
 		"mobx-react-router": "4.0.7",
-		"optimize-css-assets-webpack-plugin": "4.0.1",
-		"optipng-bin": "4.0.0",
+		"optimize-css-assets-webpack-plugin": "5.0.1",
 		"react": "16.8.6",
 		"react-dom": "16.8.6",
 		"react-router": "5.0.1",
@@ -82,6 +81,8 @@
 	},
 	"devDependencies": {
 		"husky": "2.4.1",
+		"mapslice": "2.0.0",
+		"optipng-bin": "6.0.0",
 		"rimraf": "2.6.3",
 		"tslint": "5.18.0",
 		"tslint-eslint-rules": "5.4.0",

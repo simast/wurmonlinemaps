@@ -2,7 +2,7 @@
 	This script is used to cut and compress map image files into web map tiles.
 
 	1. Place any PNG or JPG map image files in /maps directory (at project root).
-	2. Run "npx ts-node scripts/build-maps.ts" command to execute this script.
+	2. Run "yarn build:maps" command to execute this script.
 	3. Web map tiles will be created in /maps directory when script has completed.
 
 	Please note that you need to install GraphicsMagick on you system for this script
