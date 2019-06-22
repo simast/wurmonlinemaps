@@ -15,11 +15,10 @@
 	},
 	"scripts": {
 		"start": "ts-node --files .",
-		"build": "webpack --progress --env.isProduction",
+		"build": "webpack --env.isProduction",
 		"build:maps": "ts-node --files scripts/build-maps.ts",
 		"lint": "tslint --format stylish \"**/*.ts?(x)\"",
-		"clean": "rimraf dist",
-		"heroku-postbuild": "yarn build"
+		"clean": "rimraf dist"
 	},
 	"dependencies": {
 		"@types/classnames": "2.2.8",
