@@ -12,7 +12,7 @@ interface ILeafletControl {
 }
 
 // Simple Leaflet control used as React portal target
-const LeafletControl: ILeafletControl = Leaflet.Control.extend({
+const LeafletControl: ILeafletControl = Leaflet.Control.extend<Partial<Leaflet.Control>>({
 
 	onAdd(): HTMLElement {
 
@@ -126,12 +126,12 @@ interface IProps {
 	}
 
 	// Handle click event
-	private handleClick: Leaflet.DomEvent.EventHandlerFn = () => {
+	private handleClick = () => {
 		this.expand()
 	}
 
 	// Handle map interaction events
-	private handleMapInteraction: Leaflet.LeafletEventHandlerFn = () => {
+	private handleMapInteraction = () => {
 		this.collapse()
 	}
 }

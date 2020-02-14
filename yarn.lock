@@ -188,10 +188,10 @@
     "@types/tapable" "*"
     "@types/webpack" "*"
 
-"@types/leaflet@1.4.4":
-  version "1.4.4"
-  resolved "https://registry.yarnpkg.com/@types/leaflet/-/leaflet-1.4.4.tgz#4a3d9815fe6c32a04ac3a230fe23772be8e0de83"
-  integrity sha512-CROxHvsRDFyR1OQKZv/WJsCVFv8Wj6wFF/FOI/yiGwX7GMivyvF8Ks5AT3/JYk269pGiE43wP9JOgcr7EK2eUw==
+"@types/leaflet@1.5.8":
+  version "1.5.8"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/@types/leaflet/-/leaflet-1.5.8.tgz#1c550803672fc5866b8b2c38512009f2b5d4205d"
+  integrity sha1-HFUIA2cvxYZriyw4USAJ8rXUIF0=
   dependencies:
     "@types/geojson" "*"
 
@@ -3852,10 +3852,10 @@ lcid@^2.0.0:
   dependencies:
     invert-kv "^2.0.0"
 
-leaflet@1.5.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.5.1.tgz#9afb9d963d66c870066b1342e7a06f92840f46bf"
-  integrity sha512-ekM9KAeG99tYisNBg0IzEywAlp0hYI5XRipsqRXyRTeuU8jcuntilpp+eFf5gaE0xubc9RuSNIVtByEKwqFV0w==
+leaflet@1.6.0:
+  version "1.6.0"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/leaflet/-/leaflet-1.6.0.tgz#aecbb044b949ec29469eeb31c77a88e2f448f308"
+  integrity sha1-rsuwRLlJ7ClGnusxx3qI4vRI8wg=
 
 less-loader@5.0.0:
   version "5.0.0"
