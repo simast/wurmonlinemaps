@@ -91,7 +91,7 @@ export default ({
 // Build a list of webpack plugins
 function getPlugins(isProduction: boolean): webpack.Plugin[] {
 
-	const plugins = []
+	const plugins: webpack.Plugin[] = []
 
 	// Generate main HTML file
 	plugins.push(new HtmlWebpackPlugin({
