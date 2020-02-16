@@ -5,6 +5,9 @@ import {MAP_TILE_SIZE} from './constants'
 interface IMap {
 	readonly name: string
 	readonly size: number
+	readonly sizeByVersion?: {
+		readonly [version: string]: number
+	}
 	readonly hasPvP: boolean
 	readonly versionsByType: {
 		readonly [type in MapType]?: ReadonlyArray<string>
@@ -21,6 +24,7 @@ export const mapsByServer: {
 		hasPvP: false,
 		versionsByType: {
 			[MapType.Isometric]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
@@ -29,18 +33,21 @@ export const mapsByServer: {
 				'2012-01'
 			],
 			[MapType.Terrain]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
 				'2016-11-01'
 			],
 			[MapType.Topographic]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
 				'2016-11-01'
 			],
 			[MapType.Routes]: [
+				'2020-01-11',
 				'2017-12-31'
 			]
 		}
@@ -51,6 +58,7 @@ export const mapsByServer: {
 		hasPvP: false,
 		versionsByType: {
 			[MapType.Isometric]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
@@ -58,18 +66,21 @@ export const mapsByServer: {
 				'2011-09-07'
 			],
 			[MapType.Terrain]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
 				'2016-11-01'
 			],
 			[MapType.Topographic]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
 				'2016-11-01'
 			],
 			[MapType.Routes]: [
+				'2020-01-11',
 				'2017-12-31'
 			]
 		}
@@ -80,6 +91,7 @@ export const mapsByServer: {
 		hasPvP: false,
 		versionsByType: {
 			[MapType.Isometric]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
@@ -87,18 +99,21 @@ export const mapsByServer: {
 				'2011-09-15'
 			],
 			[MapType.Terrain]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
 				'2016-11-01'
 			],
 			[MapType.Topographic]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
 				'2016-11-01'
 			],
 			[MapType.Routes]: [
+				'2020-01-11',
 				'2017-12-31'
 			]
 		}
@@ -109,6 +124,7 @@ export const mapsByServer: {
 		hasPvP: false,
 		versionsByType: {
 			[MapType.Isometric]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
@@ -116,18 +132,21 @@ export const mapsByServer: {
 				'2012-05-31'
 			],
 			[MapType.Terrain]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
 				'2016-11-01'
 			],
 			[MapType.Topographic]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
 				'2016-11-01'
 			],
 			[MapType.Routes]: [
+				'2020-01-11',
 				'2017-12-31'
 			]
 		}
@@ -138,6 +157,7 @@ export const mapsByServer: {
 		hasPvP: false,
 		versionsByType: {
 			[MapType.Isometric]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
@@ -145,18 +165,21 @@ export const mapsByServer: {
 				'2012-12-12'
 			],
 			[MapType.Terrain]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
 				'2016-11-01'
 			],
 			[MapType.Topographic]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
 				'2016-11-01'
 			],
 			[MapType.Routes]: [
+				'2020-01-11',
 				'2017-12-31'
 			]
 		}
@@ -167,6 +190,7 @@ export const mapsByServer: {
 		hasPvP: false,
 		versionsByType: {
 			[MapType.Isometric]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
@@ -174,18 +198,21 @@ export const mapsByServer: {
 				'2012-12-18'
 			],
 			[MapType.Terrain]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
 				'2016-11-01'
 			],
 			[MapType.Topographic]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
 				'2016-11-01'
 			],
 			[MapType.Routes]: [
+				'2020-01-11',
 				'2017-12-31'
 			]
 		}
@@ -196,6 +223,7 @@ export const mapsByServer: {
 		hasPvP: false,
 		versionsByType: {
 			[MapType.Isometric]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
@@ -203,18 +231,21 @@ export const mapsByServer: {
 				'2015-04-18'
 			],
 			[MapType.Terrain]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
 				'2016-11-01'
 			],
 			[MapType.Topographic]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
 				'2016-11-01'
 			],
 			[MapType.Routes]: [
+				'2020-01-11',
 				'2017-12-31'
 			]
 		}
@@ -225,6 +256,7 @@ export const mapsByServer: {
 		hasPvP: true,
 		versionsByType: {
 			[MapType.Isometric]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
@@ -233,12 +265,14 @@ export const mapsByServer: {
 				'2007-12-17'
 			],
 			[MapType.Terrain]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
 				'2016-11-01'
 			],
 			[MapType.Topographic]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
@@ -249,9 +283,13 @@ export const mapsByServer: {
 	[Server.Elevation]: {
 		name: 'Elevation',
 		size: 4096,
+		sizeByVersion: {
+			'2020-01-11': 2048
+		},
 		hasPvP: true,
 		versionsByType: {
 			[MapType.Isometric]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
@@ -259,12 +297,14 @@ export const mapsByServer: {
 				'2015-04-15'
 			],
 			[MapType.Terrain]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
 				'2016-11-01'
 			],
 			[MapType.Topographic]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
@@ -278,6 +318,7 @@ export const mapsByServer: {
 		hasPvP: true,
 		versionsByType: {
 			[MapType.Isometric]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
@@ -285,12 +326,14 @@ export const mapsByServer: {
 				'2011-11-01'
 			],
 			[MapType.Terrain]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
 				'2016-11-01'
 			],
 			[MapType.Topographic]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
@@ -304,18 +347,21 @@ export const mapsByServer: {
 		hasPvP: true,
 		versionsByType: {
 			[MapType.Isometric]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
 				'2016-11-01'
 			],
 			[MapType.Terrain]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
 				'2016-11-01'
 			],
 			[MapType.Topographic]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
@@ -329,6 +375,7 @@ export const mapsByServer: {
 		hasPvP: true,
 		versionsByType: {
 			[MapType.Isometric]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
@@ -336,12 +383,14 @@ export const mapsByServer: {
 				'2011-11-01'
 			],
 			[MapType.Terrain]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
 				'2016-11-01'
 			],
 			[MapType.Topographic]: [
+				'2020-01-11',
 				'2019-01-01',
 				'2017-12-31',
 				'2017-08-13',
@@ -376,7 +425,7 @@ export const mapTypesByServer: {
 	}
 )
 
-// Utility function used to get max zoom level based on server map size
+// Get max zoom level based on server map size
 export const getMapMaxZoom = (mapSize: number): number => (
 	Math.log(mapSize / MAP_TILE_SIZE) / Math.log(2)
 )

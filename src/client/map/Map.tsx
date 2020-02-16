@@ -82,6 +82,15 @@ export class Map extends React.Component {
 
 		if (server && type && version) {
 
+			const {size, sizeByVersion} = mapsByServer[server]
+			const mapSize = sizeByVersion && sizeByVersion[version] ? sizeByVersion[version] : size
+			const maxNativeZoom = getMapMaxZoom(mapSize)
+
+			if (tileLayer && maxNativeZoom !== tileLayer.options.maxNativeZoom) {
+				tileLayer.remove()
+				tileLayer = undefined
+			}
+
 			const tileLayerUrl = `${STATIC_BASE_URL}/${server}-${type}-${version}/{z}/{x}/{y}.{getExtension}`
 
 			// Re-use existing tile layer
@@ -90,13 +99,9 @@ export class Map extends React.Component {
 			}
 			// Create a new tile layer
 			else {
-
-				const {size} = mapsByServer[server]
-				const maxNativeZoom = getMapMaxZoom(size)
-
 				const bounds = Leaflet.latLngBounds(
-					map.unproject([0, size], maxNativeZoom),
-					map.unproject([size, 0], maxNativeZoom)
+					map.unproject([0, mapSize], maxNativeZoom),
+					map.unproject([mapSize, 0], maxNativeZoom)
 				)
 
 				// Create a new Leaflet TileLayer
