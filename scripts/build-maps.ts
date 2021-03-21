@@ -35,11 +35,10 @@ const getTileFileId = (mapId: string, tileFile: string): string => (
 )
 
 // Cut map image file into web map tiles
-const cutMapIntoTiles = (
+const cutMapIntoTiles = async (
 	mapId: string,
 	mapFile: string
-) => new Promise<void>(async (resolve, reject) => {
-
+) => {
 	let lastProgressPercent: number
 
 	const mapSlicer = new MapSlicer({
@@ -55,10 +54,7 @@ const cutMapIntoTiles = (
 		console.info(`${mapId}: Starting to process ${files} files.`)
 	})
 
-	mapSlicer.on('error', reject)
-
 	mapSlicer.on('progress', (progress) => {
-
 		const progressPercent = Math.round(progress * 100)
 
 		if (progressPercent !== lastProgressPercent) {
@@ -68,22 +64,16 @@ const cutMapIntoTiles = (
 		lastProgressPercent = progressPercent
 	})
 
-	mapSlicer.on('end', () => {
+	await mapSlicer.start()
 
-		console.info(`${mapId}: Finished processing all map tiles.`)
-		resolve()
-	})
-
-	mapSlicer.start()
-})
+	console.info(`${mapId}: Finished processing all map tiles.`)
+}
 
 // Get map file maximum zoom level
 const getMapFileMaxZoom = (
 	mapFile: string
 ) => new Promise<number>(async (resolve, reject) => {
-
 	gm(mapFile).size((error, size) => {
-
 		if (error) {
 			return reject(error)
 		}
@@ -97,7 +87,6 @@ const convertLowZoomMapTileToJPG = (
 	mapId: string,
 	tileFile: string
 ) => new Promise<void>(async (resolve, reject) => {
-
 	console.log(`${mapId}: Converting ${getTileFileId(mapId, tileFile)}`)
 
 	const tileFileJPG = tileFile.replace('.png', '.jpg')
@@ -118,7 +107,6 @@ const convertLowZoomMapTileToJPG = (
 
 // Convert low zoom PNG tiles to JPG files
 const convertLowZoomMapTilesToJPG = async (mapId: string, mapFile: string) => {
-
 	const maxZoom = await getMapFileMaxZoom(mapFile)
 
 	// Get all low zoom map tile files
@@ -139,7 +127,6 @@ const optimizePNGMapTile = (
 	mapId: string,
 	tileFile: string
 ) => new Promise<void>(async (resolve, reject) => {
-
 	console.log(`${mapId}: Optimizing ${getTileFileId(mapId, tileFile)}`)
 
 	const args = [
@@ -151,7 +138,6 @@ const optimizePNGMapTile = (
 	]
 
 	execFile(optipng, args, (error: Error | null) => {
-
 		if (error) {
 			return reject(error)
 		}
@@ -162,7 +148,6 @@ const optimizePNGMapTile = (
 
 // Optimize all PNG map tiles
 const optimizePNGMapTiles = async (mapId: string) => {
-
 	// Get all PNG map tile files
 	const pngFiles = glob.sync(`${MAPS_DIR}/${mapId}/**/*.png`, {
 		nodir: true
@@ -178,7 +163,6 @@ const optimizePNGMapTiles = async (mapId: string) => {
 
 // Process map file
 const processMap = async (mapFile: string) => {
-
 	const mapId = path.basename(mapFile, path.extname(mapFile))
 
 	await cutMapIntoTiles(mapId, mapFile)
@@ -187,7 +171,6 @@ const processMap = async (mapFile: string) => {
 }
 
 (async () => {
-
 	// Process each map file
 	for (const mapFile of mapFiles) {
 		await processMap(mapFile)
